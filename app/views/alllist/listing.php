@@ -1,4 +1,21 @@
 
+<?php 
+
+$countKost = 0;
+$countKontrakan = 0;
+$countPaviliun = 0;
+
+foreach ($data['lists'] as $properti) {
+    if ($properti['category_id'] === 1) {
+        $countKost++;
+    } elseif ($properti['category_id'] === 2) {
+        $countKontrakan++;
+    } elseif ($properti['category_id'] === 3) {
+        $countPaviliun++;
+    }
+}
+?>
+
     <section
     class="hero-section d-flex justify-content-center align-items-center"
     id="section_1"
@@ -47,6 +64,56 @@
         </div>
       
       </div>
+      <div class="row section-counter mt-5 pb-5 text-center">
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-light"><?=$countKost?></span></span
+              >
+              <span class="caption text-light">KOST LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-light"><?=$countKontrakan?></span></span
+              >
+              <span class="caption text-light">KONTRAKAN LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-light"><?=$countPaviliun?></span></span
+              >
+              <span class="caption text-light">PAVILIUN LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-3"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary"><?=count($data['lists'])?></span></span
+              >
+              <span class="caption text-primary">TOTAL</span>
+            </div>
+          </div>
+        </div>
    
     </div>
   </section>
@@ -70,20 +137,7 @@
               </button>
             </li>
 
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="marketing-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#paviliun-tab"
-                type="button"
-                role="tab"
-                aria-controls="paviliun-tab"
-                aria-selected="false"
-              >
-                Paviliun
-              </button>
-            </li>
+            
 
             <li class="nav-item" role="presentation">
               <button
@@ -99,7 +153,20 @@
                 Kontrakan
               </button>
             </li>
-            
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="marketing-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#paviliun-tab"
+                type="button"
+                role="tab"
+                aria-controls="paviliun-tab"
+                aria-selected="false"
+              >
+                Paviliun
+              </button>
+            </li>
             
           </ul>
         </div>
@@ -118,7 +185,7 @@
                 <div class="row">
                 <?php
                     $kostItems = array_filter($data['lists'], function($list) {
-                        return $list['pro_category'] == 'Kost';
+                        return $list['category_id'] == 1;
                     });
 
                     if (empty($kostItems)): ?>
@@ -126,8 +193,8 @@
                     <?php else: ?>
                     <?php foreach ($kostItems as $list): ?>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
-                        <div class="property-item mb-30">
-                            <a href="home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
+                        <div class="property-item mb-30" data-aos="fade" data-aos-delay="300">
+                            <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
                             <img src="<?= BASEURL ?>images/kamar1.png" alt="Image" class="img-fluid" />
                             </a>
                             <div class="property-content">
@@ -150,10 +217,10 @@
                                 </span>
                                 <span class="d-block d-flex align-items-center">
                                     <span class="icon-bath me-2"></span>
-                                    <span class="caption">Kamar Mandi Luar</span>
+                                    <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
                                 </span>
                                 </div>
-                                <a href="home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
+                                <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
                             </div>
                             </div>
                         </div>
@@ -173,7 +240,7 @@
                   
                   <?php
                     $kostItems = array_filter($data['lists'], function($list) {
-                        return $list['pro_category'] == 'Paviliun';
+                        return $list['category_id'] == 3;
                     });
 
                     if (empty($kostItems)): ?>
@@ -184,7 +251,7 @@
                     <?php foreach ($kostItems as $list): ?>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
                         <div class="property-item mb-30">
-                            <a href="home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
+                            <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
                             <img src="<?= BASEURL ?>images/kamar1.png" alt="Image" class="img-fluid" />
                             </a>
                             <div class="property-content">
@@ -207,10 +274,10 @@
                                 </span>
                                 <span class="d-block d-flex align-items-center">
                                     <span class="icon-bath me-2"></span>
-                                    <span class="caption">Kamar Mandi Luar</span>
+                                    <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
                                 </span>
                                 </div>
-                                <a href="home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
+                                <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
                             </div>
                             </div>
                         </div>
@@ -232,7 +299,7 @@
                 <div class="row">
                 <?php
                     $kostItems = array_filter($data['lists'], function($list) {
-                        return $list['pro_category'] == 'Kontrakan';
+                        return $list['category_id'] == 2;
                     });
 
                     if (empty($kostItems)): ?>
@@ -243,7 +310,7 @@
                     <?php foreach ($kostItems as $list): ?>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
                         <div class="property-item mb-30">
-                            <a href="home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
+                            <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
                             <img src="<?= BASEURL ?>images/kamar1.png" alt="Image" class="img-fluid" />
                             </a>
                             <div class="property-content">
@@ -266,10 +333,10 @@
                                 </span>
                                 <span class="d-block d-flex align-items-center">
                                     <span class="icon-bath me-2"></span>
-                                    <span class="caption">Kamar Mandi Luar</span>
+                                    <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
                                 </span>
                                 </div>
-                                <a href="home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
+                                <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
                             </div>
                             </div>
                         </div>
@@ -323,7 +390,7 @@
           <div class="col-lg-4">
             <div class="widget">
               <h3>Dev </h3>
-              <img src="images/kostifydev.png" alt="" width="300px">
+              <img src="<?=BASEURL?>images/kostifydev.png" alt="" width="300px">
              
             </div>
           </div>

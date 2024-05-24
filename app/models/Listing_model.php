@@ -1,8 +1,7 @@
 <?php 
 class Listing_model {
     private $table = 'listings';
-    private $db;
-   
+    private $db; 
 
     public function __construct()
     {
@@ -16,10 +15,11 @@ class Listing_model {
             $query = "SELECT property.*, region.region_name 
             FROM property 
             JOIN region ON region.id = property.region_id 
-            WHERE property.propertyname LIKE '%$keyword%' 
-            OR property.region_id = (SELECT id FROM region WHERE region_name = '$keyword') 
+            WHERE property.propertyname LIKE :keyword 
+            OR region.region_name LIKE :keyword 
             ORDER BY property.id DESC";
             $this->db->query($query);
+            $this->db->bind(':keyword', $keyword);
             return $this->db->resultSet();
         }
     

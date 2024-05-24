@@ -10,7 +10,7 @@ class Home extends Controller{
         $this->view('home/index',$data);
     }
     public function detail($slug){
-        $data['title'] ='Detail ';
+        $data['title'] = $slug;
         // $data['username'] = $this->model('User_model')->getUser();
         $data['lists'] = $this->model('Listing_model')->getDetailBySlug($slug);
         $data['comments'] = $this->model('Listing_model')->getCommentByPostSlug($slug);

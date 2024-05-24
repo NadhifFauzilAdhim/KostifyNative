@@ -282,7 +282,6 @@ foreach ($data['lists'] as $properti) {
             <p>
               <a
                 href="home/listing"
-                target="_blank"
                 class="btn btn-primary text-white py-3 px-4"
                 >Lihat Semua</a
               >
@@ -315,7 +314,7 @@ foreach ($data['lists'] as $properti) {
                         </span>
                         <span class="d-block d-flex align-items-center">
                           <span class="icon-bath me-2"></span>
-                          <span class="caption">Kamar Mandi Luar</span>
+                          <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
                         </span>
                       </div>
 
