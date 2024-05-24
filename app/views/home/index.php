@@ -17,7 +17,7 @@ foreach ($data['lists'] as $properti) {
 
 <!-- POP UP Informasi -->
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel1">Informasi</h1>
@@ -34,7 +34,7 @@ foreach ($data['lists'] as $properti) {
     </div>
     <!-- POP UP sewa Property -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel2">Sewa Property</h1>
@@ -51,7 +51,7 @@ foreach ($data['lists'] as $properti) {
     </div>
     <!-- POP UP Bayar -->
     <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel3">Bayar</h1>
@@ -68,7 +68,7 @@ foreach ($data['lists'] as $properti) {
     </div>
     <!-- POP UP TEMPATI -->
     <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel4">Tempati</h1>

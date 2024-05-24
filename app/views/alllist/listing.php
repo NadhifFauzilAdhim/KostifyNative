@@ -34,7 +34,7 @@ foreach ($data['lists'] as $properti) {
           </h3>
        
           <form
-            action="/kostifynative/public/home/listing"
+            action="<?=BASEURL?>home/listing"
             method="GET"
             class="custom-form mt-4 pt-2 mb-5"
             role="search"

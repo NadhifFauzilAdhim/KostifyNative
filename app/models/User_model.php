@@ -20,7 +20,9 @@ class User_model {
         }
 
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $data['phone'] = '+62'.$data['phone'];
 
+        
         $this->db->query('INSERT INTO user (name, username, email, phone, password, is_owner) VALUES (:name, :username, :email, :phone, :password, :is_owner)');
 
         $this->db->bind(':name', $data['name']);
@@ -54,7 +56,7 @@ class User_model {
 
     private function validate($data)
     {
-        if (empty($data['is_owner']) || empty($data['username']) || empty($data['name']) || empty($data['phone']) || empty($data['email']) || empty($data['password'])) {
+        if (!isset($data['is_owner']) || empty($data['username']) || empty($data['name']) || empty($data['phone']) || empty($data['email']) || empty($data['password'])) {
             return false;
         }
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {

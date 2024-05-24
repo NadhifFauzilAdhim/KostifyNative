@@ -49,13 +49,16 @@
                           placeholder="Name" />
                           
                     </div>
-
-                    <div class="form-outline mb-2">
-                        <label class="form-label" for="phone">No.Telp</label>
-                        <input type="text" name="phone" id="phone" class="form-control "
-                          placeholder="+6200000000000" />
+                    
+                    <label class="form-label" for="phone">No.Telp</label>
+                    <div class="input-group mb-2">
+                        
+                        <span class="input-group-text" id="basic-addon3">+62</span>
+                        <input type="text" name="phone" id="phone" class="form-control"
+                          placeholder="85XXXXXXXXX" aria-describedby="basic-addon3" />
                           
                       </div>
+                      
   
                     <div class="form-outline mb-2">
                         <label class="form-label" for="email">Email</label>

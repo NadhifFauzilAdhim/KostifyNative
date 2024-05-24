@@ -4,7 +4,7 @@
     ?>
   
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel1">Ajukan Penyewaan</h1>
@@ -21,6 +21,10 @@
             <label for="confirmproperty" class="form-label">Property</label> 
             <input class="form-control" id="confirmproperty" type="text" placeholder=" <?=$list['propertyname']?>" disabled>
             </div>
+            <div class="mb-3">
+            <label for="price" class="form-label">Harga Sewa</label> 
+            <input class="form-control" id="price" type="text" placeholder="Rp <?= number_format( $list['price'], 0, ',', '.') ?> / Bulan" disabled>
+            </div>
             Permintaan Anda akan dikirimkan kepada pemilik properti. Pastikan untuk memeriksa pilihan Anda dengan teliti sebelum mengirimkan permintaan. Untuk melihat status permintaan Anda, silakan masuk ke dashboard akun Anda.
             <form action="<?=BASEURL?>home/addrequest" method="POST">
             <div class="mb-3"> 
@@ -29,14 +33,68 @@
             <div class="mb-3">
               <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$data['userauth']['id']?>"> 
             </div>
-            <br> <p class="text-warning">Ketuk tombol "Konfirmasi" untuk Melanjutkan.</p>
+            <br> <p class="text-warning text-center">Ketuk tombol "Konfirmasi" untuk Melanjutkan.</p>
+            <div class="buttoncon text-center">
             <button type="submit" class="btn btn-primary">Konfirmasi</button>
+            </div>
+           
           </form>
           
           </div>
+         
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel2">Owner</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <div class="image text-center">
+          <span class="wrap-icon me-3">
+                <img src="<?=BASEURL?>images/author.png" alt="" width="80px" class="rounded-circle"
+                >
+          </span>
+          </div>
+         
+          <div class="mb-3">
+            <div class="text-center">
+            <h5 class="mt-2"><?= $list['name']?></h5>
+            <h6 class="mt-2">@<?= $list['username']?></h6>
+            </div>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mt-4 px-4 text-center">
+
+              <div class="stats">
+              
+                <h6 class="mb-0"><span class="me-1 fs-6 icon-whatsapp1"></span> Whatsapp</h6>
+                <a href="https://wa.me/<?= $list['phone']?>">
+                <span>whatsapp chat <span class="icon-external-link"></span></span>
+                </a>
+                
+
+              </div>
+              <div class="stats">
+              <h6 class="mb-0"><span class="me-1 fs-6 icon-phone"></span>Phone</h6>
+                <a href="tel://<?= $list['phone']?>">
+                <span> <?= $list['phone']?><span class="icon-external-link"></span></span>
+                </a>
+                
+              </div>
+              <div class="stats">
+              <h6 class="mb-0"><span class="me-1 fs-6 icon-user1"></span>Bergabung</h6>
+                <span> <?= $list['created_at']?></span>
+              </div>
+             
+
+            </div>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          
           </div>
         </div>
       </div>
@@ -144,10 +202,10 @@
                 >
                 </span>
                 <div class="feature-text">
-                  <h3 class="heading">Owner</h3>
+                  <h3 class="heading"> <?= $list['name']?></h3>
                   <p class="text-black-50">
-                  <?= $list['name']?> <br>
-                    <a href=""><?= $list['phone']?></a>
+                  
+                    <button type="button" class="btn btn-primary" id="showModal2Button">Detail</button>
                   </p>
                   
                 </div>
@@ -160,12 +218,18 @@
                 </span>
                 <div class="feature-text">
                   <h3 class="heading">Anjukan Penyewaan</h3>
+                  <?php if($list['available'] > 0):?>
                   <?php if(isset( $data['userauth'])):?>
-                  <button type="button" class="btn btn-primary" id="showModal1Button">Minta</button>
+                  <button type="button" class="btn btn-primary" id="showModal1Button">Ajukan</button>
                   <?php else:?>
                     <a href="<?= BASEURL?>login">
                     <span class="btn btn-primary">Login</span>
                   </a>
+                 
+                  <?php endif?>
+                  <?php else:?>
+                   
+                    <span class="btn btn-danger">Property Penuh</span>
                  
                   <?php endif?>
                 </div>
@@ -214,26 +278,54 @@
                   <div class="headings d-flex justify-content-between align-items-center mb-3">
                       <h5>Comment</h5>
                   </div>
+                  <?php if(isset( $data['userauth'])):?>
+                  <div class="comment-add mb-4">
+                  <form action="<?=BASEURL?>home/comment" method="POST">
+                  <div class="mb-3">
+                    <input type="text" class="form-control" id="comment" name="comment_body">
+                  </div>
+                  <div class="mb-3">
+                    <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$data['userauth']['id']?>">
+                  </div>
+                  <div class="mb-3">
+                    <input type="hidden" class="form-control" id="property_id" name="property_id" value="<?=$list['id']?>">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Buat Komentar</button>
+                </form>
+                  </div>
+                  <?php else:?>
+                   <div class="alert alert-warning text-center" role="alert">
+                    <a href="<?= BASEURL?>login" class="link-dark">
+                    Login untuk menambahkan komentar <span class="icon-external-link"></span>
+                    </a>
+                  </div>
+                  <?php endif?>
+                  
+                  
                  <?php if($data['comments']):?>
                   <?php foreach($data['comments'] as $comment):?>
                   <div class="card p-3 ">
                       <div class="d-flex justify-content-between align-items-center">
                     <div class="user d-flex flex-row align-items-center">
                       <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" width="30" class="user-img rounded-circle mx-3">
-                      <span><span class="font-weight-bold text-primary"><?= $comment['name']?> <span class="badge <?= $bg_color = ($comment['user_id'] == $list['user_id']) ? 'bg-warning' : 'bg-primary'; ?> rounded-pill ms-3"><?= $role = ($comment['user_id'] == $list['user_id']) ? 'Owner' : 'User'; ?></span></span> <br> <small class="font-weight-bold"> <?= $comment['comment_body']?></small></span>
+                      <span><span class="font-weight-bold text-primary"><?= $comment['name']?> <span class="badge <?= $bg_color = ($comment['user_id'] == $list['user_id']) ? 'bg-warning' : 'bg-primary'; ?> rounded-pill ms-3"><?= $role = ($comment['user_id'] == $list['user_id']) ? 'Owner' : 'User'; ?></span> 
+                      </span> <br> <small class="font-weight-bold"> <?= htmlspecialchars($comment['comment_body'])?></small></span>
                     </div>
-                    <small>2 days ago</small>
+                    <small><?= $comment['created_at']?></small>
                     </div>
                     <div class="action d-flex justify-content-between mt-2 align-items-center">
                       <div class="reply px-4">
-                          <small>Remove</small>
-                          <small>Reply</small>
-                          
+                      <?php if(isset( $data['userauth'])):?>
+                        <?php if($comment['user_id'] == $data['userauth']['id']):?>
+                          <form action="<?=BASEURL?>home/delComment" method="POST" >
+                          <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                          <button type="submit" class="btn btn-link btn-sm link-danger ">Hapus</button>
+                         </form>
+                        <?php endif?>
+                        <?php endif?>
+                        
                       </div>
-                      <div class="icons align-items-center">
-                          <i class="fa fa-star text-warning"></i>
-                          <i class="fa fa-check-circle-o check-icon"></i>
-                      </div>
+                      
                     </div>
                   </div>
                   <?php endforeach?>
@@ -311,6 +403,11 @@
       
         document.getElementById('showModal1Button').addEventListener('click', function() {
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal1'));
+        myModal.show();
+      });
+
+      document.getElementById('showModal2Button').addEventListener('click', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
         myModal.show();
       });
   

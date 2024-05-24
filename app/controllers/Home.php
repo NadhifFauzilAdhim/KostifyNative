@@ -44,4 +44,29 @@ class Home extends Controller{
             exit;
         }
     } 
+    public function Comment(){
+        if($this->model('Listing_model')->addComment($_POST) > 0){
+            Flasher::setFlash('Comment Berhasil','dibuat','success');
+            header('location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+        else{
+            Flasher::setFlash('Comment gagal','dibuat','warning');
+            header('location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+    }
+    public function delComment(){
+        
+        if($this->model('Listing_model')->deleteComment($_POST) > 0){
+            Flasher::setFlash('Comment','Dihapus','success');
+            header('location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+        else{
+            Flasher::setFlash('Comment gagal','Dihapus','warning');
+            header('location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+    }
 }

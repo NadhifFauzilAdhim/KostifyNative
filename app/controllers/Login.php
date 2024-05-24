@@ -15,7 +15,7 @@ class Login extends Controller {
             header('Location: ' . BASEURL . 'home');
         } else {
             // Login failed
-            Flasher::setFlash('Login', 'failed. Invalid username or password.', 'danger');
+            Flasher::setFlash('Login Gagal', 'Password atau email salah.', 'danger');
             header('Location: ' . BASEURL . 'login');
         }
         exit;

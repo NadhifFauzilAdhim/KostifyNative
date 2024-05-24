@@ -60,9 +60,21 @@
 .icon-user:before {
   content: "\f007";
 }
+
+.icon-user1:before {
+  content: "\f007";
+  color: #25d366;
+}
+
 .icon-film:before {
   content: "\f008";
 }
+
+.icon-whatsapp1:before {
+  content: "\f232";
+  color: #25d366;
+}
+
 .icon-th-large:before {
   content: "\f009";
 }
