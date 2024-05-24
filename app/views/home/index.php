@@ -14,6 +14,7 @@ foreach ($data['lists'] as $properti) {
     }
 }
 ?>
+
 <!-- POP UP Informasi -->
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
       <div class="modal-dialog">

@@ -8,16 +8,26 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel1">Ajukan Penyewaan</h1>
+            
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        
           </div>
           <div class="modal-body">
+            <div class="mb-3">
+            <label for="confirmname" class="form-label">Nama</label> 
+            <input class="form-control" id="confirmname" type="text" placeholder=" <?=$data['userauth']['name']?>" disabled>
+            </div>
+            <div class="mb-3">
+            <label for="confirmproperty" class="form-label">Property</label> 
+            <input class="form-control" id="confirmproperty" type="text" placeholder=" <?=$list['propertyname']?>" disabled>
+            </div>
             Permintaan Anda akan dikirimkan kepada pemilik properti. Pastikan untuk memeriksa pilihan Anda dengan teliti sebelum mengirimkan permintaan. Untuk melihat status permintaan Anda, silakan masuk ke dashboard akun Anda.
             <form action="<?=BASEURL?>home/addrequest" method="POST">
             <div class="mb-3"> 
               <input type="hidden" class="form-control" id="property_id" name="property_id" value="<?=$list['id']?>">
             </div>
             <div class="mb-3">
-              <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$list['user_id']?>"> 
+              <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$data['userauth']['id']?>"> 
             </div>
             <br> <p class="text-warning">Ketuk tombol "Konfirmasi" untuk Melanjutkan.</p>
             <button type="submit" class="btn btn-primary">Konfirmasi</button>
@@ -51,6 +61,7 @@
     <div class="section"  data-aos="fade" data-aos-delay="300">
       <div class="container">
         <div class="row text-left mb-5 text-center">
+         <?php Flasher::flash()?>
           <div class="col-12">
             <h2 class="font-weight-bold heading text-primary mb-4">Detail <?= $list['pro_category']?></h2>
           </div>
@@ -58,6 +69,7 @@
             <q>
             <?= $list['facility']?>
             </q>
+            
           </div>
           
         </div>
@@ -69,6 +81,7 @@
      
         <div class="row justify-content-between mb-2">
           <div class="col-lg-4 "  data-aos="fade" data-aos-delay="300">
+            
             <div class="d-flex feature-h">
               <span class="wrap-icon me-3">
                 <span class="icon-bed me-2"></span>
@@ -147,7 +160,14 @@
                 </span>
                 <div class="feature-text">
                   <h3 class="heading">Anjukan Penyewaan</h3>
+                  <?php if(isset( $data['userauth'])):?>
                   <button type="button" class="btn btn-primary" id="showModal1Button">Minta</button>
+                  <?php else:?>
+                    <a href="<?= BASEURL?>login">
+                    <span class="btn btn-primary">Login</span>
+                  </a>
+                 
+                  <?php endif?>
                 </div>
               </div>
             </div>

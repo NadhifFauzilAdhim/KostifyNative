@@ -29,11 +29,18 @@
       
               <li><a href="">About</a></li>
               <li class="has-children">
-                <a href="#">HAI budi</a>
+                <?php if(isset($data['userauth'])):?>
+                <a href="#">HAI <?= $data['userauth']['username']?></a>
                 <ul class="dropdown">
                   <li><a href="dashboard.html">DASHBOARD</a></li>
-                  <li><a href="login.html">LOGOUT</a></li>
+                  <li><a href="<?= BASEURL ?>logout/">LOGOUT</a></li>
                 </ul>
+                <?php else:?>
+                  <a href="#">HAI Guest</a>
+                <ul class="dropdown">
+                  <li><a href="<?=BASEURL?>login">Login</a></li>
+                </ul>
+                <?php endif?>
               </li>
               
               

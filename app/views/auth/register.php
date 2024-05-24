@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kostify | Register</title>
-    <link href="<?= BASEURL?>/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="<?= BASEURL?>/css/bootstrap-icons.css" rel="stylesheet" />
-    <link href="<?= BASEURL?>/css/login.css" rel="stylesheet" />
+    <title>Kostify | <?=$data['title']?></title>
+    <link rel="shortcut icon" href="<?= BASEURL?>images/Kostifyop.png" />
+    <link href="<?= BASEURL?>css/bootstrap.css" rel="stylesheet" />
+    <link href="<?= BASEURL?>css/bootstrap-icons.css" rel="stylesheet" />
+    <link href="<?= BASEURL?>css/login.css" rel="stylesheet" />
 </head>
-<body style="background-image:url('<?= BASEURL?>/img/loginbanner.png');">
+<body style="background-image:url('<?= BASEURL?>images/loginbanner.png');">
     
   <section class="h-100 gradient-form ">
     <div class="container py-5 h-100">
@@ -20,12 +21,14 @@
                 <div class="card-body p-md-5 mx-md-4">
   
                   <div class="text-center">
-                    <img src="<?= BASEURL?>/img/Kostify.png"
+                    <img src="<?= BASEURL?>/images/Kostify.png"
                       style="width: 185px;" alt="logo">
                   
                   </div>
-                  <form action="/register" method="POST">
+                  <?php Flasher::flash()?>
+                  <form action="<?=BASEURL?>register/adduser" method="POST">
                     <p class="text-center">Create An Account</p>
+                    
                     <div class="form-outline mb-2">
                       <label class="form-label" for="is_owner">User Type</label>
                         <select id="is_owner" name="is_owner" class="form-select">
@@ -71,7 +74,13 @@
                       <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="sumbit">Sign Up</button>
                       
                     </div>
-  
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                      <p class="mb-0 me-2">Sudah Memiliki Akun?</p>
+                      <a href="<?=BASEURL?>login">
+                        <button type="button" class="btn btn-outline-warning">Log In</button>
+                      </a>
+                      
+                    </div>
   
                   </form>
                 </div>
@@ -90,12 +99,6 @@
       </div>
     </div>
   </section>
-  <div id="overlayer"></div>
-    <div class="loader">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  <script src=""></script>
+ 
 </body>
 </html>
