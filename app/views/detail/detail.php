@@ -15,11 +15,11 @@
           <div class="modal-body">
             <div class="mb-3">
             <label for="confirmname" class="form-label">Nama</label> 
-            <input class="form-control" id="confirmname" type="text" placeholder=" <?=$data['userauth']['name']?>" disabled>
+            <input class="form-control" id="confirmname" type="text" placeholder=" <?=htmlspecialchars($data['userauth']['name'])?>" disabled>
             </div>
             <div class="mb-3">
             <label for="confirmproperty" class="form-label">Property</label> 
-            <input class="form-control" id="confirmproperty" type="text" placeholder=" <?=$list['propertyname']?>" disabled>
+            <input class="form-control" id="confirmproperty" type="text" placeholder=" <?=htmlspecialchars($list['propertyname'])?>" disabled>
             </div>
             <div class="mb-3">
             <label for="price" class="form-label">Harga Sewa</label> 
@@ -62,8 +62,8 @@
          
           <div class="mb-3">
             <div class="text-center">
-            <h5 class="mt-2"><?= $list['name']?></h5>
-            <h6 class="mt-2">@<?= $list['username']?></h6>
+            <h5 class="mt-2"><?= htmlspecialchars($list['name'])?></h5>
+            <h6 class="mt-2">@<?= htmlspecialchars($list['username'])?> <?=$stat = ($list['is_verified'] == 1) ? '<span class="badge bg-success ms-2">Terverifikasi</span>' : '<span class="badge bg-danger ms-2">Belum Verifikasi</span>'?></h6>
             </div>
             </div>
             
@@ -72,7 +72,7 @@
               <div class="stats">
               
                 <h6 class="mb-0"><span class="me-1 fs-6 icon-whatsapp1"></span> Whatsapp</h6>
-                <a href="https://wa.me/<?= $list['phone']?>">
+                <a href="https://wa.me/<?= $list['phone']?>" target="_blank">
                 <span>whatsapp chat <span class="icon-external-link"></span></span>
                 </a>
                 
@@ -80,7 +80,7 @@
               </div>
               <div class="stats">
               <h6 class="mb-0"><span class="me-1 fs-6 icon-phone"></span>Phone</h6>
-                <a href="tel://<?= $list['phone']?>">
+                <a href="tel://<?= $list['phone']?>" target="_blank">
                 <span> <?= $list['phone']?><span class="icon-external-link"></span></span>
                 </a>
                 
@@ -108,8 +108,8 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up"><?= $list['propertyname']?><span class="badge <?= $bg_color = ($list['type'] == 'putra') ? 'bg-warning' : 'bg-danger'; ?> rounded-pill ms-2"><?= $list['type']?></span></h1>
-            <hp class="heading" data-aos="fade-up"><?= $list['location']?></hp>
+            <h1 class="heading" data-aos="fade-up"><?= htmlspecialchars($list['propertyname'])?><span class="badge <?= $bg_color = ($list['type'] == 'putra') ? 'bg-warning' : 'bg-danger'; ?> rounded-pill ms-2"><?= $list['type']?></span></h1>
+            <hp class="heading" data-aos="fade-up"><?= htmlspecialchars($list['location'])?></hp>
            
           </div>
         </div>
@@ -120,6 +120,12 @@
       <div class="container">
         <div class="row text-left mb-5 text-center">
          <?php Flasher::flash()?>
+         <?php if($list['is_verified'] == 0):?>
+          <div class="alert alert-warning" role="alert">
+          <i class="bi bi-exclamation-circle me-1"></i> Pemilik Properti Belum Terverifikasi
+          </div>
+         <?php endif?>
+         
           <div class="col-12">
             <h2 class="font-weight-bold heading text-primary mb-4">Detail <?= $list['pro_category']?></h2>
           </div>
@@ -138,7 +144,7 @@
       <div class="container">
      
         <div class="row justify-content-between mb-2">
-          <div class="col-lg-4 "  data-aos="fade" data-aos-delay="300">
+          <div class="col-lg-4 " data-aos="fade" data-aos-delay="300">
             
             <div class="d-flex feature-h">
               <span class="wrap-icon me-3">
@@ -174,7 +180,7 @@
                 <h3 class="heading">Harga</h3>
                 <p class="text-info">
                 <span class="fs-5 fw-bold"><?= number_format( $list['price'], 0, ',', '.') ?></u></strong></span>
-                   / Bulan
+                / <?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?>
                 </p>
               </div>
             </div>
@@ -190,7 +196,7 @@
                   <h3 class="heading">Lokasi</h3>
                   <a href=""></a>
                   <p class="text-black-50">
-                  <?= $list['location']?> <a href="https://www.google.com/maps/place/<?= $list['location']?>">Lihat Maps</a>
+                  <?= htmlspecialchars($list['location'])?> <a href="https://www.google.com/maps/place/<?= $list['location']?>">Lihat Maps</a>
                   </p>
                 </div>
               </div>
@@ -202,7 +208,7 @@
                 >
                 </span>
                 <div class="feature-text">
-                  <h3 class="heading"> <?= $list['name']?></h3>
+                  <h3 class="heading"> <?= $list['name']?> <?php if($list['is_verified'] == 1):?><i class="bi bi-check-circle-fill text-primary"></i><?php endif?></h3>
                   <p class="text-black-50">
                   
                     <button type="button" class="btn btn-primary" id="showModal2Button">Detail</button>
@@ -217,7 +223,11 @@
                   <span class="icon-check-square-o"></span>
                 </span>
                 <div class="feature-text">
+                  <?php if($list['payment_type'] == 0):?>
+                  <h3 class="heading">Anjukan Pembelian</h3>
+                  <?php else:?>
                   <h3 class="heading">Anjukan Penyewaan</h3>
+                  <?php endif?>
                   <?php if($list['available'] > 0):?>
                   <?php if(isset( $data['userauth'])):?>
                   <button type="button" class="btn btn-primary" id="showModal1Button">Ajukan</button>
@@ -245,7 +255,7 @@
           <div class="row">
             <div class="col-lg-12">
               <iframe
-                        src="https://maps.google.com/maps?q=<?= $list['location']?>/@-7.7897521,110.3473608,17z&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        src="https://maps.google.com/maps?q=<?= urldecode($list['location']) ?>/@-7.7616081,110.3452829,21z&t=&z=13&ie=UTF8&iwloc=&output=embed"
                         frameborder="0"
                         style="border: 0; width: 100%; height: 500px"
                         allowfullscreen
@@ -308,7 +318,7 @@
                       <div class="d-flex justify-content-between align-items-center">
                     <div class="user d-flex flex-row align-items-center">
                       <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" width="30" class="user-img rounded-circle mx-3">
-                      <span><span class="font-weight-bold text-primary"><?= $comment['name']?> <span class="badge <?= $bg_color = ($comment['user_id'] == $list['user_id']) ? 'bg-warning' : 'bg-primary'; ?> rounded-pill ms-3"><?= $role = ($comment['user_id'] == $list['user_id']) ? 'Owner' : 'User'; ?></span> 
+                      <span><span class="font-weight-bold text-primary"><?= $comment['name']?> <span class="badge <?= $bg_color = ($comment['user_id'] == $list['user_id']) ? 'bg-warning' : 'bg-primary'; ?> rounded-pill ms-3"><?= $role = ($comment['user_id'] == $list['user_id']) ? 'Owner' : 'User'; ?></span> <?php if($comment['is_verified'] == 1):?><i class="ms-2 bi bi-check-circle-fill text-primary"></i><?php endif?>
                       </span> <br> <small class="font-weight-bold"> <?= htmlspecialchars($comment['comment_body'])?></small></span>
                     </div>
                     <small><?= $comment['created_at']?></small>

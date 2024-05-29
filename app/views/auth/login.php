@@ -10,7 +10,7 @@
     <link href="<?= BASEURL?>css/bootstrap-icons.css" rel="stylesheet" />
     <link href="<?= BASEURL?>css/login.css" rel="stylesheet" />
 </head>
-<body style="background-image:url('./images/loginbanner.png');">
+<body style="background-image:url('<?= BASEURL?>images/loginbanner.png');">
     
   <section class="h-100 gradient-form ">
     <div class="container py-5 h-100">
@@ -39,7 +39,7 @@
                     <div class="form-outline mb-4">
                       <label class="form-label" for="password">Password</label>
                       <input type="password" id="password" name="password" class="form-control " autofocus required/>
-                      <div id="frogotpassword" class="form-text"><a href="" class="text-danger">Lupa Password?</a></div>
+                      <div id="frogotpassword" class="form-text"><a href="<?= BASEURL?>/login/forgotpassword" class="text-danger">Lupa Password?</a></div>
                     </div>
   
                     <div class="text-center pt-1 mb-5 pb-1">

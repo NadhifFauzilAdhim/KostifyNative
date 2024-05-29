@@ -66,5 +66,9 @@ class Database {
         return $this->stmt->rowCount();
     }
 
+    public function errorInfo(){
+        return $this->stmt->errorInfo();
+    }
+
 }
 

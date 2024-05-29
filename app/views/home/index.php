@@ -3,6 +3,8 @@
 $countKost = 0;
 $countKontrakan = 0;
 $countPaviliun = 0;
+$countApartemen = 0;
+$countRumah = 0;
 
 foreach ($data['lists'] as $properti) {
     if ($properti['category_id'] === 1) {
@@ -12,6 +14,13 @@ foreach ($data['lists'] as $properti) {
     } elseif ($properti['category_id'] === 3) {
         $countPaviliun++;
     }
+    elseif ($properti['category_id'] === 4) {
+      $countApartemen++;
+  }
+  elseif ($properti['category_id'] === 5) {
+    $countRumah++;
+}
+    
 }
 ?>
 
@@ -20,11 +29,16 @@ foreach ($data['lists'] as $properti) {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel1">Informasi</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel1">Pencarian</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-           Anda tidak akan pernah ketinggalan informasi terbaru tentang properti yang Anda minati. Kami memahami bahwa ketersediaan properti dapat berubah dengan cepat, dan itulah mengapa kami menyediakan pembaruan secara real-time agar Anda selalu dapat membuat keputusan yang tepat.
+          <img
+                    src="<?= BASEURL?>/images/search.png"
+                    class="custom-block-image-featured img-fluid"
+                    alt=""
+            />
+          Dengan fitur pencarian yang mudah, Anda dapat menemukan kos atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -37,11 +51,16 @@ foreach ($data['lists'] as $properti) {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel2">Sewa Property</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel2">Informasi</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-           Anda dapat dengan mudah menemukan dan menyewa tempat tinggal yang sesuai dengan kebutuhan dan preferensi Anda. Kami memahami betapa pentingnya menemukan tempat tinggal yang nyaman dan cocok dengan gaya hidup Anda, dan itulah mengapa kami menyediakan solusi yang praktis dan efisien untuk membantu Anda mencapai hal tersebut.
+          <img
+                    src="<?= BASEURL?>/images/information.png"
+                    class="custom-block-image-featured img-fluid"
+                    alt=""
+                  />
+          Temukan detail menyeluruh mengenai fasilitas, lokasi, dan harga sewa setiap properti. Semua yang Anda butuhkan untuk membuat keputusan tepat, tersedia dalam satu platform."
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -54,11 +73,16 @@ foreach ($data['lists'] as $properti) {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel3">Bayar</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel3">Pilihan</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-           Anda dapat mengelola pembayaran sewa properti dengan mudah dan efisien. Kami memahami betapa pentingnya kelancaran proses pembayaran dalam pengalaman menyewa tempat tinggal Anda, dan itulah mengapa kami menyediakan solusi yang praktis untuk membantu Anda dalam hal ini.
+          <img
+                    src="<?= BASEURL?>/images/question.png"
+                    class="custom-block-image-featured img-fluid"
+                    alt=""
+                  />
+          Kami menawarkan berbagai tipe tempat tinggal, mulai dari kosan, kontrakan, hingga rumah kost eksklusif. Temukan pilihan yang sesuai dengan kebutuhan dan preferensi Anda
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -94,11 +118,13 @@ foreach ($data['lists'] as $properti) {
     <div class="container hero-section-container" >
       <div class="row pb-5">
         
-        <div class="col-lg-8 col-12 mx-auto">
+        <div class="col-lg-8 col-12 mx-auto"
+        style="z-index: 10;"
+        >
           <img
-            src="<?= BASEURL?>images/Kostifyop.png"
+            src="<?= BASEURL?>images/Kostify.png"
             alt=""
-            width="200px"
+            width="300px"
             class="rounded mx-auto d-block pt-5"
             data-aos="fade"
             data-aos-delay="300"
@@ -126,6 +152,7 @@ foreach ($data['lists'] as $properti) {
               <input
                 name="search"
                 type="search"
+                style="z-index: 10;"
                 class="form-control"
                 id="keyword"
                 placeholder="Cari Lokasi, Nama dan Tipe Disini"
@@ -141,37 +168,176 @@ foreach ($data['lists'] as $properti) {
         </div>
       
       </div>
-      <div class="header-shape pt-5">
-        <svg
-        class="waves"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 25 210 27"
-        preserveAspectRatio="none"
-        shape-rendering="auto"
-      >
-        <defs>
-          <path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          />
-        </defs>
-        <g class="parallax">
-            
-            <use
-              xlink:href="#gentle-wave"
-              x="48"
-              y="5"
-              fill="rgba(0, 32, 74, 0.3)"
-            />
-            <use xlink:href="#gentle-wave" x="48" y="7" fill="#F2F4F6" />
-          </g>
-      </svg>
+      <div class="header-shape">
+      <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 270"><path fill=" #fffcfc" fill-opacity="1" d="M0,256L80,240C160,224,320,192,480,202.7C640,213,800,267,960,272C1120,277,1280,235,1360,213.3L1440,192L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
       </div>
     </div>
   </section>
 
-    <section class="features-1">
+  <section class="featured-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-12 mb-4" data-aos="fade-up">
+              <div class="custom-block bg-white shadow-lg">
+                
+                  <div class="d-flex">
+                    <div>
+                      <h5 class="mb-2">Pencarian Yang Mudah</h5>
+
+                      <p class="mb-0">
+                        Temukan tempat tinggal dengan beberapa klik
+                        saja.
+                      </p>
+                    </div>
+
+                    <span class="badge bg-primary rounded-pill ms-auto">1</span>
+                  </div>
+
+                  <img
+                    src="<?= BASEURL?>/images/search.png"
+                    class="custom-block-image-featured img-fluid"
+                    alt=""
+                  />
+                  <div class="text-center mt-2">
+                  <button type="button" class="btn btn-primary" id="showModal1Button">Selengkapnya</button> 
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-12 mb-4" data-aos="fade-up">
+              <div class="custom-block bg-white shadow-lg">
+               
+                  <div class="d-flex">
+                    <div>
+                      <h5 class="mb-2">Informasi Lengkap</h5>
+
+                      <p class="mb-0">
+                        Dapatkan detail lengkap tentang fasilitas, lokasi, dan
+                        harga setiap properti.
+                      </p>
+                    </div>
+
+                    <span class="badge bg-primary rounded-pill ms-auto">2</span>
+                  </div>
+
+                  <img
+                    src="<?= BASEURL?>/images/information.png"
+                    class="custom-block-image-featured img-fluid"
+                    alt=""
+                  />
+                  <div class="text-center mt-2">
+                  <button type="button" class="btn btn-primary" id="showModal2Button">Selengkapnya</button> 
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-12 mb-4">
+              <div class="custom-block bg-white shadow-lg" data-aos="fade-up">
+                  <div class="d-flex">
+                    <div>
+                      <h5 class="mb-2">Beragam Pilihan</h5>
+                      <p class="mb-0">
+                        Kami menawarkan berbagai tipe kos mulai dari kosan,
+                        kontrakan, hingga rumah kost eksklusif.
+                      </p>
+                    </div>
+                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                  </div>
+                  <img
+                    src="<?= BASEURL?>/images/question.png"
+                    class="custom-block-image-featured img-fluid"
+                    alt=""
+                  />
+                  <div class="text-center mt-2">
+                  <button type="button" class="btn btn-primary" id="showModal3Button">Selengkapnya</button> 
+                  </div>
+                 
+              </div>
+            </div>
+          </div>
+          </div>
+           <div class="row section-counter mt-5 pb-5 text-center justify-content-center">
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-2"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-dark"><?=$countKost?></span></span
+              >
+              <span class="caption text-black-50">KOST LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-2"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-dark"><?=$countKontrakan?></span></span
+              >
+              <span class="caption text-black-50">KONTRAKAN LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-2"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-dark"><?=$countPaviliun?></span></span
+              >
+              <span class="caption text-black-50">PAVILIUN LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-2"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-dark"><?=$countApartemen?></span></span
+              >
+              <span class="caption text-black-50">APARTEMENT LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-2"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-dark"><?=$countRumah?></span></span
+              >
+              <span class="caption text-black-50">RUMAH LIST</span>
+            </div>
+          </div>
+          <div
+            class="col-6 col-sm-6 col-md-6 col-lg-2"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            <div class="counter-wrap mb-5 mb-lg-0">
+              <span class="number"
+                ><span class="countup text-primary"><?=count($data['lists'])?></span></span
+              >
+              <span class="caption text-black-50">TOTAL</span>
+            </div>
+          </div>
+        </div>
+
+      
+        </div>  
+        
+
+        
+      </section>
+      
+
+    <!-- <section class="features-1">
       <div class="container">
         <div class="row">
           <div class="col-12 col-lg-3 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="400">
@@ -225,7 +391,7 @@ foreach ($data['lists'] as $properti) {
           >
             <div class="counter-wrap mb-5 mb-lg-0">
               <span class="number"
-                ><span class="countup text-dark"><?=$countKost?></span></span
+                ><span class="countup text-whi"><?=$countKost?></span></span
               >
               <span class="caption text-black-50">KOST LIST</span>
             </div>
@@ -269,7 +435,7 @@ foreach ($data['lists'] as $properti) {
         </div>
       </div>
      
-    </section>
+    </section> -->
 
     <div class="section " data-aos="fade-up" data-aos-delay="300">
       <div class="container">
@@ -300,18 +466,18 @@ foreach ($data['lists'] as $properti) {
                   </a>
                  
                   <div class="property-content">
-                    <span class="city d-block mb-3"><?=$list['propertyname']?><span class="badge <?= $bg_color = ($list['type'] == 'Putra') ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?=$list['type']?></span></span>
-                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/Bulan</span></div>
+                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= $bg_color = ($list['type'] == 'Putra') ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?=$list['type']?></span></span>
+                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
                     <div>
                       <span class="d-block mb-2 text-black"
-                        ><?=$list['location']?></span
+                        ><?=htmlspecialchars($list['location'])?></span
                       >
                       <span class="city d-block mb-3"><?=$list['region_name']?></span>
 
                       <div class="specs d-flex mb-4">
                         <span class="d-block d-flex align-items-center me-3">
                           <span class="icon-bed me-2"></span>
-                          <span class="caption"><?=$list['available']?> Kamar Tersedia</span>
+                          <span class="caption"><?=htmlspecialchars($list['available'])?> Kamar Tersedia</span>
                         </span>
                         <span class="d-block d-flex align-items-center">
                           <span class="icon-bath me-2"></span>
@@ -473,7 +639,7 @@ foreach ($data['lists'] as $properti) {
         <div class="row justify-content-between mb-5">
           <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
             <div class="img-about dots">
-              <img src="property-image/kamar3.png" alt="Image" class="img-fluid" />
+              <img src="<?=BASEURL?>images/kamar3.png" alt="Image" class="img-fluid" />
             </div>
           </div>
           <div class="col-lg-4">

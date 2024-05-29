@@ -28,7 +28,7 @@ class Listing_model {
     }
 
     public function getDetailBySlug($slug){
-    $this->db->query("SELECT property.*, user.name, user.username, user.id AS 'id_user', user.phone, category.pro_category,region.region_name FROM property JOIN user ON user.id = property.user_id JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id WHERE property.slug = :slug");
+    $this->db->query("SELECT property.*, user.name, user.username, user.is_verified, user.id AS 'id_user', user.phone, category.pro_category,region.region_name FROM property JOIN user ON user.id = property.user_id JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id WHERE property.slug = :slug");
     $this->db->bind(':slug', $slug);
     $result = $this->db->single();
 
@@ -39,7 +39,7 @@ class Listing_model {
     }
 }
 public function getCommentByPostSlug($slug){
-    $this->db->query("SELECT comments.*, property.slug, user.name FROM comments JOIN property ON property.id = comments.property_id JOIN user ON user.id = comments.user_id WHERE property.slug =:slug ORDER BY comments.id DESC");
+    $this->db->query("SELECT comments.*, property.slug, user.name, user.is_verified FROM comments JOIN property ON property.id = comments.property_id JOIN user ON user.id = comments.user_id WHERE property.slug =:slug ORDER BY comments.id DESC");
     $this->db->bind(':slug', $slug);
     $result =  $this->db->resultSet(); 
     if ($result) {

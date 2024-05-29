@@ -62,7 +62,7 @@
 
                 <footer class="home__footer">
                     
-                    <span>ndfproject.my.id</span>
+                    <span><a href="https://ndfproject.my.id">ndfproject.my.id</a> |<a href="https://kostify.my.id"> kostify.my.id </a>| <a href="https://arabisgroup.cloud">arabisgroup.cloud</a> </span>
                 </footer>
             </section>
         </main>
