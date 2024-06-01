@@ -21,9 +21,9 @@
               <li class="has-children">
                 <a href="properties.html">Property</a>
                 <ul class="dropdown">
-                  <li><a href="#">Kost</a></li>
-                  <li><a href="#">Paviliun</a></li>
-                  <li><a href="#">Kontrakan</a></li>
+                  <li><a href="<?=BASEURL?>/home/listing?search=kost">Kost</a></li>
+                  <li><a href="<?=BASEURL?>/home/listing?search=paviliun">Paviliun</a></li>
+                  <li><a href="<?=BASEURL?>/home/listing?search=kontrakan">Kontrakan</a></li>
                 </ul>
               </li>
       

@@ -462,18 +462,19 @@ foreach ($data['lists'] as $properti) {
                 <?php foreach($data['lists']as $list) :?>
                 <div class="property-item">
                   <a href="home/detail/<?=$list['slug'] ?>" class="img">
-                    <img src=" <?= BASEURL ?>images/kamar1.png" alt="Image" class="img-fluid" />
+                  <img src="<?= !empty($list['image']) ? BASEURL . 'uploads/' . $list['image'] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
                   </a>
+
                  
                   <div class="property-content">
-                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= $bg_color = ($list['type'] == 'Putra') ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?=$list['type']?></span></span>
+                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
                     <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
                     <div>
                       <span class="d-block mb-2 text-black"
                         ><?=htmlspecialchars($list['location'])?></span
                       >
-                      <span class="city d-block mb-3"><?=$list['region_name']?></span>
-
+                     </span>
+                     <span class="city d-block mb-3"><span class="icon-map-marker fs-5 me-2"></span><?=$list['region_name']?></span>
                       <div class="specs d-flex mb-4">
                         <span class="d-block d-flex align-items-center me-3">
                           <span class="icon-bed me-2"></span>

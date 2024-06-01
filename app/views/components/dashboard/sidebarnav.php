@@ -17,13 +17,13 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="dashboard.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="<?=BASEURL?>dashboard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <?php if($data['userauth']['is_verified']):?>
                     <?php if($data['userauth']['is_owner'] == 1):?>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-house me-2"></i>My Properties</a>
                         <div class="dropdown-menu  border-0">
-                            <a href="post.html" class="dropdown-item mx-3"><i class="fa fa-plus me-2"></i>Buat Post</a>
+                            <a href="<?=BASEURL?>dashboard/post" class="dropdown-item mx-3"><i class="fa fa-plus me-2"></i>Post</a>
                             <a href="resident.html" class="dropdown-item mx-3"><i class="fa-solid fa-user me-2"></i>Resident</a>
                            
                         </div>

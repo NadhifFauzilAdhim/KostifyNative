@@ -2,6 +2,7 @@
     $list = $data['lists'];
   
     ?>
+    
   
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -13,17 +14,22 @@
         
           </div>
           <div class="modal-body">
+          <p class="text-warning text-center"><i class="bi bi-exclamation-circle me-2"></i>Mohon Konfirmasi Data Dibawah Ini</p>
             <div class="mb-3">
             <label for="confirmname" class="form-label">Nama</label> 
-            <input class="form-control" id="confirmname" type="text" placeholder=" <?=htmlspecialchars($data['userauth']['name'])?>" disabled>
+            <input class="form-control" type="text" value="<?=htmlspecialchars($data['userauth']['name'])?>" aria-label="readonly input example" readonly>
             </div>
             <div class="mb-3">
             <label for="confirmproperty" class="form-label">Property</label> 
-            <input class="form-control" id="confirmproperty" type="text" placeholder=" <?=htmlspecialchars($list['propertyname'])?>" disabled>
+            <input class="form-control" type="text" value=" <?=htmlspecialchars($list['propertyname'])?>" aria-label="readonly input example" readonly>
             </div>
             <div class="mb-3">
             <label for="price" class="form-label">Harga Sewa</label> 
-            <input class="form-control" id="price" type="text" placeholder="Rp <?= number_format( $list['price'], 0, ',', '.') ?> / Bulan" disabled>
+            <input class="form-control" type="text" value=" Rp <?= number_format( $list['price'], 0, ',', '.') ?> / <?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?>" aria-label="readonly input example" readonly>
+            </div>
+            <div class="mb-3">
+            <label for="price" class="form-label">Lokasi</label>
+            <input class="form-control" type="text" value="<?=htmlspecialchars($list['location'])?>" aria-label="readonly input example" readonly>
             </div>
             Permintaan Anda akan dikirimkan kepada pemilik properti. Pastikan untuk memeriksa pilihan Anda dengan teliti sebelum mengirimkan permintaan. Untuk melihat status permintaan Anda, silakan masuk ke dashboard akun Anda.
             <form action="<?=BASEURL?>home/addrequest" method="POST">
@@ -87,7 +93,7 @@
               </div>
               <div class="stats">
               <h6 class="mb-0"><span class="me-1 fs-6 icon-user1"></span>Bergabung</h6>
-                <span> <?= $list['created_at']?></span>
+              <span> <?= date('Y-m-d', strtotime($list['created_at'])) ?></span>
               </div>
              
 
@@ -99,7 +105,7 @@
         </div>
       </div>
     </div>
-
+   
   
     <div
       class="hero page-inner overlay"
@@ -108,8 +114,9 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up"><?= htmlspecialchars($list['propertyname'])?><span class="badge <?= $bg_color = ($list['type'] == 'putra') ? 'bg-warning' : 'bg-danger'; ?> rounded-pill ms-2"><?= $list['type']?></span></h1>
+            <h1 class="heading" data-aos="fade-up"><?= htmlspecialchars($list['propertyname'])?><span class="badge <?= $bg_color = ($list['type'] == 1) ? 'bg-warning' : 'bg-danger'; ?> rounded-pill ms-2"><?= $list['type_name']?></span></h1>
             <hp class="heading" data-aos="fade-up"><?= htmlspecialchars($list['location'])?></hp>
+
            
           </div>
         </div>
@@ -318,7 +325,7 @@
                       <div class="d-flex justify-content-between align-items-center">
                     <div class="user d-flex flex-row align-items-center">
                       <img src="https://img.icons8.com/color/48/user-male-circle--v1.png" width="30" class="user-img rounded-circle mx-3">
-                      <span><span class="font-weight-bold text-primary"><?= $comment['name']?> <span class="badge <?= $bg_color = ($comment['user_id'] == $list['user_id']) ? 'bg-warning' : 'bg-primary'; ?> rounded-pill ms-3"><?= $role = ($comment['user_id'] == $list['user_id']) ? 'Owner' : 'User'; ?></span> <?php if($comment['is_verified'] == 1):?><i class="ms-2 bi bi-check-circle-fill text-primary"></i><?php endif?>
+                      <span><span class="font-weight-bold text-primary"><?= $comment['username']?> <span class="badge <?= $bg_color = ($comment['user_id'] == $list['user_id']) ? 'bg-warning' : 'bg-primary'; ?> rounded-pill ms-3"><?= $role = ($comment['user_id'] == $list['user_id']) ? 'Owner' : 'User'; ?></span> <?php if($comment['is_verified'] == 1):?><i class="ms-2 bi bi-check-circle-fill text-primary"></i><?php endif?>
                       </span> <br> <small class="font-weight-bold"> <?= htmlspecialchars($comment['comment_body'])?></small></span>
                     </div>
                     <small><?= $comment['created_at']?></small>
@@ -418,6 +425,10 @@
 
       document.getElementById('showModal2Button').addEventListener('click', function() {
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
+        myModal.show();
+      });
+      document.getElementById('showModal3Button').addEventListener('click', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal3'));
         myModal.show();
       });
   

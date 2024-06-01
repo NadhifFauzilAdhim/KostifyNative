@@ -12,23 +12,28 @@ class Listing_model {
         if(isset($_GET['search'])){
             $keyword = $_GET['search'];
             $keyword = '%' . $keyword . '%';
-            $query = "SELECT property.*, region.region_name 
+            $query = "SELECT property.*, region.region_name, type.type_name
             FROM property 
             JOIN region ON region.id = property.region_id 
-            WHERE property.propertyname LIKE :keyword 
-            OR region.region_name LIKE :keyword 
+            JOIN type ON type.id = property.type
+            WHERE (property.propertyname LIKE :keyword 
+            OR region.region_name LIKE :keyword OR type.type_name LIKE :keyword) AND property.visibility = 1
+
             ORDER BY property.id DESC";
+
             $this->db->query($query);
+
             $this->db->bind(':keyword', $keyword);
             return $this->db->resultSet();
         }
     
-        $this->db->query('SELECT property.*,category.pro_category,region.region_name FROM property JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id ORDER BY id DESC');
+        $this->db->query('SELECT property.*,category.pro_category,region.region_name,type.type_name FROM property JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id JOIN type ON type.id = property.type WHERE property.visibility = 1 ORDER BY id DESC ');
         return $this->db->resultSet();
     }
 
+
     public function getDetailBySlug($slug){
-    $this->db->query("SELECT property.*, user.name, user.username, user.is_verified, user.id AS 'id_user', user.phone, category.pro_category,region.region_name FROM property JOIN user ON user.id = property.user_id JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id WHERE property.slug = :slug");
+    $this->db->query("SELECT property.*, user.name, user.username, user.is_verified, user.id AS 'id_user', user.phone, category.pro_category,region.region_name, type.type_name FROM property JOIN user ON user.id = property.user_id JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id JOIN type ON type.id = property.type WHERE property.slug = :slug");
     $this->db->bind(':slug', $slug);
     $result = $this->db->single();
 
@@ -39,7 +44,7 @@ class Listing_model {
     }
 }
 public function getCommentByPostSlug($slug){
-    $this->db->query("SELECT comments.*, property.slug, user.name, user.is_verified FROM comments JOIN property ON property.id = comments.property_id JOIN user ON user.id = comments.user_id WHERE property.slug =:slug ORDER BY comments.id DESC");
+    $this->db->query("SELECT comments.*, property.slug, user.username, user.is_verified FROM comments JOIN property ON property.id = comments.property_id JOIN user ON user.id = comments.user_id WHERE property.slug =:slug ORDER BY comments.id DESC");
     $this->db->bind(':slug', $slug);
     $result =  $this->db->resultSet(); 
     if ($result) {

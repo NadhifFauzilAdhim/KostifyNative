@@ -1,4 +1,3 @@
-
             <?php if($data['userauth']['is_verified'] == 0):?>
             <div class="alert alert-warning text-center" role="alert">
             Akun anda belum terverifikasi, silahkan verifikasi terlebih dahulu
@@ -11,7 +10,7 @@
                             <i class="fa fa-home fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Post</p>
-                                <h6 class="mb-0">3 Postingan</h6>
+                                <h6 class="mb-0"><?=count($data['getpropery'])?> Post</h6>
                             </div>
                         </div>
                     </div>
@@ -49,7 +48,7 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Riwayat Pembayaran</h6>
+                        <h6 class="mb-0">Riwayat Pembayaran [60 Hari]</h6>
                         <a href="">Show All</a>
                     </div>
                     <div class="table-responsive">
@@ -66,52 +65,21 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php foreach($data['getPaymentStat'] as $payment):?>
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>25 Mar 2024</td>
-                                    <td>INV-0456</td>
-                                    <td>Muhajir Faturahman</td>
-                                    <td>Rp1.200.000</td>
-                                    <td ><a class="btn btn-sm btn-success" href="">Paid</a></td>
+
+                                    <td><?=$payment['created_at']?></td>
+                                    <td><?=$payment['invoice']?></td>
+                                    <td><?=$payment['name']?></td>
+                                    <td>Rp. <?= number_format( $payment['amount'], 0, ',', '.') ?></td>
+                                    <td><a class="btn btn-sm <?= $payment['status'] == 1 ? 'btn-success' : 'btn-danger' ?>" href=""><?= $payment['status'] == 1 ? 'Paid' : 'Unpaid' ?></a></td>
                                     <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
                                 </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>10 Apr 2024</td>
-                                    <td>INV-0876</td>
-                                    <td>Julian Kiyosaki H</td>
-                                    <td>Rp1.200.000</td>
-                                    <td ><a class="btn btn-sm btn-success" href="">Paid</a></td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>15 May 2024</td>
-                                    <td>INV-0234</td>
-                                    <td>Dwi Ferdiyanto</td>
-                                    <td>Rp1.300.000</td>
-                                    <td ><a class="btn btn-sm btn-success" href="">Paid</a></td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>20 Jun 2024</td>
-                                    <td>INV-0987</td>
-                                    <td>Rif'aa Surososastro S</td>
-                                    <td>Rp1.200.000</td>
-                                    <td ><a class="btn btn-sm btn-success" href="">Paid</a></td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>05 Jul 2024</td>
-                                    <td>-</td>
-                                    <td>Suci Prasetia Ningrum</td>
-                                    <td>Rp1.200.000</td>
-                                    <td ><a class="btn btn-sm btn-danger" href="">Un Paid</a></td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
+
+                               <?php endforeach?>
                             </tbody>
+
                             
                         </table>
                     </div>
@@ -122,39 +90,30 @@
                     <div class="col-sm-12 col-md-6 col-xl-8">
                         <div class="h-100 bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h6 class="mb-0">Komentar Post</h6>
+                                <h6 class="mb-0">Komentar Post [ 30 hari ]</h6>
                                 <a href="">Show All</a>
                             </div>
+                            <?php foreach($data['getcomment'] as $comment):?>
                             <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="images/author1.png" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle flex-shrink-0" src="https://img.icons8.com/color/48/user-male-circle--v1.png" alt="" style="width: 40px; height: 40px;">
+
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Julian Kiyosaki H</h6>
-                                        <small>2 hari lalu</small>
+                                        <h6 class="mb-0"><?=$comment['username']?></h6>
+                                        
+                                        <small><?=$comment['created_at']?></small>
+                                        
                                     </div>
-                                    <span>Waduhh jadi pengen</span>
+
+
+
+                                    <span><?=htmlspecialchars($comment['comment_body'])?></span> <br>
+                                    <a href="<?=BASEURL?>home/detail/<?=$comment['slug']?>"><span>Reply<span class="icon-share-square-o"></span></span></a>
+                                    
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="images/author2.png" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Dwi Ferdiyanto</h6>
-                                        <small>1 hari lalu</small>
-                                    </div>
-                                    <span>Boleh bawa ortu engga?</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-3">
-                                <img class="rounded-circle flex-shrink-0" src="images/suci.png" alt="" style="width: 40px; height: 40px;">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-0">Suci Prasetia Ningrum</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                    <span>ada ngga kosan yang gratis ?</span>
-                                </div>
-                            </div>
+
+                           <?php endforeach?>
                            
                         </div>
                     </div>
@@ -188,9 +147,9 @@
                         <div class="bg-light rounded h-100 p-4">
                         
                             <a href="<?=BASEURL?>home/detail/<?=$property['slug']?>" class="img">
-                                <img src="<?=BASEURL?>images/kamar1.png" alt="Image" class="img-fluid" />
+                                <img src="<?= !empty($property['image']) ? BASEURL . 'uploads/' . $property['image'] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
                             </a>
-                            <span class="city d-block mb-3 mt-3 fw-bold"><?=$property['propertyname']?> <span class="badge bg-warning rounded-pill ms-auto">Putra</span></span>
+                            <span class="city d-block mb-3 mt-3 fw-bold"><?=$property['propertyname']?> <span class="badge <?= $bg_color = ($property['type'] == 1) ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?=$property['type_name']?></span></span>
                             <div class="price mb-2"><span><?= number_format( $property['price'], 0, ',', '.') ?></u></strong>/Bulan</span></div>
                             <div>
                                 <div class="specs d-flex mb-4">
@@ -214,4 +173,5 @@
                  
                 </div>
             </div>
+            
             
