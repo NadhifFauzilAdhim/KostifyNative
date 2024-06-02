@@ -58,52 +58,77 @@ class Dashboard_model{
         return $result['count'] == 0; 
     }  
     
-    public function insertPost($category,$user_id,$propertyname,$type,$slug,$price,$location,$region,$available,$facility,$image,$km,$payment_type) {
+    //FIlE UPLOAD HANDLER
+    public function insertPost($category, $user_id, $propertyname, $type, $slug, $price, $location, $region, $available, $facility, $image, $km, $payment_type, $image2, $image3) {
         $target_dir = "../public/uploads/";
-        $allowed_types = ['image/jpeg', 'image/png'];
+        $allowed_types = ['image/jpeg', 'image/png','image/jpg'];
         $max_size = 5 * 1024 * 1024; // 5 MB Limit
-
-        if (!in_array($image["type"], $allowed_types)) {
-            return -2 ;
-        }
-
-        if ($image["size"] > $max_size) {
-            return -3;
-        }
-
-        // Generate a unique file name to prevent overwriting
-        $file_extension = pathinfo($image["name"], PATHINFO_EXTENSION);
-        $unique_name = uniqid() . "." . $file_extension;
-        $target_file = $target_dir . $unique_name;
-
-        // Move the uploaded file
-        if (move_uploaded_file($image["tmp_name"], $target_file)) {
-            $this->db->query("INSERT INTO property (category_id,user_id,propertyname,type,slug,price,location,region_id,available,facility,image,km,payment_type) VALUES (:category_id,:user_id,:propertyname,:type,:slug,:price,:location,:region_id,:available,:facility,:image,:km,:payment_type)");
-
-            $this->db->bind(':category_id',$category);
-            $this->db->bind(':user_id',$user_id);
-            $this->db->bind(':propertyname',$propertyname);
-            $this->db->bind(':type',$type);
-            $this->db->bind(':slug',$slug);
-            $this->db->bind(':price',$price);
-            $this->db->bind(':location',$location);
-            $this->db->bind(':region_id',$region);
-            $this->db->bind(':available',$available);
-            $this->db->bind(':facility',$facility);
-            $this->db->bind(':image',$unique_name);
-            $this->db->bind(':km',$km);
-            $this->db->bind(':payment_type',$payment_type);
-
-
-            // Execute statement
-            if ($this->db->execute()) {
-                return 1;
-            } else {
-                unlink($target_file);
-                return 0;
+    
+        function handleFileUpload($file, $target_dir, $allowed_types, $max_size) {
+            if (!in_array($file["type"], $allowed_types)) {
+                return [-2, null];
             }
+    
+            if ($file["size"] > $max_size) {
+                return [-3, null];
+            }
+    
+            $file_extension = pathinfo($file["name"], PATHINFO_EXTENSION);
+            $unique_name = uniqid() . "." . $file_extension;
+            $target_file = $target_dir . $unique_name;
+    
+            
+            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                return [1, $unique_name];
+            } else {
+                return [-1, null];
+            }
+        }
+    
+        // Handle image uploads
+        list($status1, $unique_name1) = handleFileUpload($image, $target_dir, $allowed_types, $max_size);
+        if ($status1 != 1) {
+            return $status1;
+        }
+    
+        list($status2, $unique_name2) = handleFileUpload($image2, $target_dir, $allowed_types, $max_size);
+        if ($status2 != 1) {
+            unlink($target_dir . $unique_name1);
+            return $status2;
+        }
+    
+        list($status3, $unique_name3) = handleFileUpload($image3, $target_dir, $allowed_types, $max_size);
+        if ($status3 != 1) {
+            unlink($target_dir . $unique_name1); 
+            unlink($target_dir . $unique_name2);
+            return $status3;
+        }
+    
+        $image_filenames = $unique_name1 . ',' . $unique_name2 . ',' . $unique_name3;
+       
+        $this->db->query("INSERT INTO property (category_id, user_id, propertyname, type, slug, price, location, region_id, available, facility, image, km, payment_type) VALUES (:category_id, :user_id, :propertyname, :type, :slug, :price, :location, :region_id, :available, :facility, :image, :km, :payment_type)");
+    
+        $this->db->bind(':category_id', $category);
+        $this->db->bind(':user_id', $user_id);
+        $this->db->bind(':propertyname', $propertyname);
+        $this->db->bind(':type', $type);
+        $this->db->bind(':slug', $slug);
+        $this->db->bind(':price', $price);
+        $this->db->bind(':location', $location);
+        $this->db->bind(':region_id', $region);
+        $this->db->bind(':available', $available);
+        $this->db->bind(':facility', $facility);
+        $this->db->bind(':image', $image_filenames);
+        $this->db->bind(':km', $km);
+        $this->db->bind(':payment_type', $payment_type);
+    
+        if ($this->db->execute()) {
+            return 1;
         } else {
-            return -1;
+            unlink($target_dir . $unique_name1);
+            unlink($target_dir . $unique_name2);
+            unlink($target_dir . $unique_name3);
+            return 0;
         }
     }
 

@@ -34,7 +34,7 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon3">https://kostify.my.id/detail/</span>
                                     <input type="text" class="form-control" id="slug" name="slug" required>
-                                    <div id="slugFeedback" class="invalid-feedback">
+                                    <div id="slugFeedback" class="invalid-feedback">    
                                         Slug sudah digunakan, silakan gunakan yang lain.
                                     </div>
                                     <div id="slugFeedbackValid" class="valid-feedback">
@@ -124,6 +124,30 @@
                                       </div>
                                   </div>
                                   </div>
+                                  <div class="mb-3">
+                                    <div class="container mt-5">
+                                      <div class="card">
+                                          <div class="card-body">
+                                            <label for="image2" class="form-label">Upload Gambar 1 (max 5 mb)</label>
+                                            <img class="img-preview2 img-fluid mb-3 col-sm-6" src="" alt="">
+                                            <input class="form-control " type="file" id="image2" name="image2" onchange="previewImage2()">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  </div>
+                                  <div class="mb-3">
+                                    <div class="container mt-5">
+                                      <div class="card">
+                                          <div class="card-body">
+                                            <label for="image3" class="form-label">Upload Gambar 2 (max 5 mb)</label>
+                                            <img class="img-preview3 img-fluid mb-3 col-sm-6" src="" alt="">
+                                            <input class="form-control " type="file" id="image3" name="image3" onchange="previewImage3()">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  </div>
+                                  
+                                  
                                
                                 <button type="submit" class="btn btn-primary">Buat Post</button>
                             </form>
@@ -158,6 +182,26 @@
     ofReader.readAsDataURL(image.files[0]);
     ofReader.onload = function(oFREvent){
         imgPreview.src= oFREvent.target.result;
+    }
+}
+function previewImage2(){
+    const image2 = document.querySelector('#image2');
+    const imgPreview2 = document.querySelector('.img-preview2');
+    imgPreview2.style.display='block';
+    const ofReader = new FileReader();
+    ofReader.readAsDataURL(image2.files[0]);
+    ofReader.onload = function(oFREvent){
+        imgPreview2.src= oFREvent.target.result;
+    }
+}
+function previewImage3(){
+    const image3 = document.querySelector('#image3');
+    const imgPreview3 = document.querySelector('.img-preview3');
+    imgPreview3.style.display='block';
+    const ofReader = new FileReader();
+    ofReader.readAsDataURL(image3.files[0]);
+    ofReader.onload = function(oFREvent){
+        imgPreview3.src= oFREvent.target.result;
     }
 }
     </script>

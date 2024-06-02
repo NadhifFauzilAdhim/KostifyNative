@@ -461,9 +461,17 @@ foreach ($data['lists'] as $properti) {
               <div class="property-slider">
                 <?php foreach($data['lists']as $list) :?>
                 <div class="property-item">
+                  <?php 
+                  $image_filenames = $list['image']; 
+                  $images = explode(',', $image_filenames);
+                  ?>
+                  <div class="justify-content-center">
                   <a href="home/detail/<?=$list['slug'] ?>" class="img">
-                  <img src="<?= !empty($list['image']) ? BASEURL . 'uploads/' . $list['image'] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
+                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" style=" height: 400px; object-fit: cover;" />
                   </a>
+                  </div>
+
+                  
 
                  
                   <div class="property-content">

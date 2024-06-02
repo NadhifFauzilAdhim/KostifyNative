@@ -17,7 +17,7 @@
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
-              <li class="active"><a href="/kostifynative/public/">Home</a></li>
+              <li class="active"><a href="<?= BASEURL ?>">Home</a></li>
               <li class="has-children">
                 <a href="properties.html">Property</a>
                 <ul class="dropdown">

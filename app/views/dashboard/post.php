@@ -64,12 +64,15 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <?php foreach($data['getpropery'] as $list):?>
-                     
+                        <?php 
+                        $image_filenames = $list['image']; 
+                        $images = explode(',', $image_filenames);
+                        ?>
                     <div class="col-sm-12 col-xl-4">
                         <div class="bg-light rounded h-100 p-4">
 
                             <a href="detail.html" class="img">
-                                <img src="<?= !empty($list['image']) ? BASEURL . 'uploads/' . $list['image'] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
+                                <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" style=" height: 280px; object-fit: cover;"/>
                             </a>
                             <span class="city d-block mb-3 mt-3 fw-bold"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= $bg_color = ($list['type'] == 1 || $list['type'] == 3) ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?=$list['type_name']?></span></span>
                             <div class="price mb-2"><span>Rp. <?= number_format( $list['price'], 0, ',', '.') ?></span></div>

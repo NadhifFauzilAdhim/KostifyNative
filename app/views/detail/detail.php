@@ -1,6 +1,9 @@
 <?php 
     $list = $data['lists'];
-  
+   
+    $image_filenames = $data['lists']['image']; 
+    $images = explode(',', $image_filenames);
+    
     ?>
     
   
@@ -109,7 +112,7 @@
   
     <div
       class="hero page-inner overlay"
-      style="background-image: url('<?= BASEURL?>images/kamar1.png')"
+      style="background-image: url('<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>')"
     >
       <div class="container">
         <div class="row justify-content-center align-items-center">
@@ -276,13 +279,13 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
-              <img src="<?=BASEURL?>images/kamar1.png" alt="Image" class="img-fluid" />
+              <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
             </div>
             <div class="col-md-4 mt-lg-5" data-aos="fade-up" data-aos-delay="100">
-              <img src="<?=BASEURL?>images/kamar2.png" alt="Image" class="img-fluid" />
+              <img src="<?= !empty($images[1]) ? BASEURL . 'uploads/' . $images[1] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
             </div>
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-              <img src="<?=BASEURL?>images/kamar3.png" alt="Image" class="img-fluid" />
+              <img src="<?= !empty($images[2]) ? BASEURL . 'uploads/' . $images[2] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
             </div>
           </div>
         

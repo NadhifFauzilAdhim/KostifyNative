@@ -1380,6 +1380,12 @@
   padding-top: 100px;
 }
 
+.custom-size {
+    width: 400px; /* Ganti dengan ukuran yang diinginkan */
+    height: 400px; /* Ganti dengan ukuran yang diinginkan */
+    object-fit: cover; /* Mengatur gambar agar tetap proporsional */
+  }
+
 
 
   

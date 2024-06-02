@@ -143,11 +143,15 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4 ">
                     <?php foreach( $data['getpropery'] as $property):?>
+                        <?php 
+                        $image_filenames = $property['image']; 
+                        $images = explode(',', $image_filenames);
+                        ?>
                     <div class="col-sm-12 col-xl-4">
                         <div class="bg-light rounded h-100 p-4">
                         
                             <a href="<?=BASEURL?>home/detail/<?=$property['slug']?>" class="img">
-                                <img src="<?= !empty($property['image']) ? BASEURL . 'uploads/' . $property['image'] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" />
+                                <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" style=" height: 280px; object-fit: cover;"/>
                             </a>
                             <span class="city d-block mb-3 mt-3 fw-bold"><?=$property['propertyname']?> <span class="badge <?= $bg_color = ($property['type'] == 1) ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?=$property['type_name']?></span></span>
                             <div class="price mb-2"><span><?= number_format( $property['price'], 0, ',', '.') ?></u></strong>/Bulan</span></div>
