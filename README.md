@@ -29,6 +29,7 @@
 - Email Verification with SMTP
 - Dashboard
 - Post Property
+- Property Request
 - Upload Images
 
 
