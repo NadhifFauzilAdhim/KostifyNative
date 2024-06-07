@@ -1386,6 +1386,14 @@
     object-fit: cover; /* Mengatur gambar agar tetap proporsional */
   }
 
+.profilebody{
+  background-image: linear-gradient(15deg, #0C4FF5 0%, #80d0c7 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
+.property-image{
+  border-radius: 20px;
+}
 
   

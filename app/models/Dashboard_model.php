@@ -61,14 +61,13 @@ class Dashboard_model{
     //FIlE UPLOAD HANDLER
     public function insertPost($category, $user_id, $propertyname, $type, $slug, $price, $location, $region, $available, $facility, $image, $km, $payment_type, $image2, $image3) {
         $target_dir = "../public/uploads/";
-        $allowed_types = ['image/jpeg', 'image/png','image/jpg'];
-        $max_size = 5 * 1024 * 1024; // 5 MB Limit
+        $allowed_types = ['image/jpeg', 'image/png','image/jpg','image/webp'];
+        $max_size = 5 * 1024 * 1024; // 5 MB File Limit
     
         function handleFileUpload($file, $target_dir, $allowed_types, $max_size) {
             if (!in_array($file["type"], $allowed_types)) {
                 return [-2, null];
             }
-    
             if ($file["size"] > $max_size) {
                 return [-3, null];
             }
@@ -76,7 +75,6 @@ class Dashboard_model{
             $file_extension = pathinfo($file["name"], PATHINFO_EXTENSION);
             $unique_name = uniqid() . "." . $file_extension;
             $target_file = $target_dir . $unique_name;
-    
             
             if (move_uploaded_file($file["tmp_name"], $target_file)) {
                 return [1, $unique_name];
@@ -85,7 +83,6 @@ class Dashboard_model{
             }
         }
     
-        // Handle image uploads
         list($status1, $unique_name1) = handleFileUpload($image, $target_dir, $allowed_types, $max_size);
         if ($status1 != 1) {
             return $status1;
@@ -105,14 +102,14 @@ class Dashboard_model{
         }
     
         $image_filenames = $unique_name1 . ',' . $unique_name2 . ',' . $unique_name3;
-       
+        $lowerslug = strtolower($slug);
         $this->db->query("INSERT INTO property (category_id, user_id, propertyname, type, slug, price, location, region_id, available, facility, image, km, payment_type) VALUES (:category_id, :user_id, :propertyname, :type, :slug, :price, :location, :region_id, :available, :facility, :image, :km, :payment_type)");
     
         $this->db->bind(':category_id', $category);
         $this->db->bind(':user_id', $user_id);
         $this->db->bind(':propertyname', $propertyname);
         $this->db->bind(':type', $type);
-        $this->db->bind(':slug', $slug);
+        $this->db->bind(':slug', $lowerslug);
         $this->db->bind(':price', $price);
         $this->db->bind(':location', $location);
         $this->db->bind(':region_id', $region);
@@ -132,7 +129,34 @@ class Dashboard_model{
         }
     }
 
+    public function deletePost($data) {
+        $this->db->query("SELECT image FROM property WHERE id = :id");
+        $this->db->bind(':id', $data['property_id']);
+        $result = $this->db->single();
+
+        if ($result) {
+            $images = explode(',', $result['image']);
+            $target_dir = "../public/uploads/";
+            foreach ($images as $image) {
+                if (file_exists($target_dir . $image)) {
+                    $result = unlink($target_dir . $image);
+                    if (!$result) {
+                        return -1;
+                    } 
+                } 
+            }
+            $this->db->query("DELETE FROM property WHERE id = :id");
+            $this->db->bind(':id', $data['property_id']);
+            $executionResult = $this->db->execute();
+            
+            if ($executionResult) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            return -3;
+        }
+    }
+
 }
-
-
-?>

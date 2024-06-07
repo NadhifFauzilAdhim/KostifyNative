@@ -1,4 +1,13 @@
-<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="<?= BASEURL?>css/bootstrap.css" />
+    <link rel="stylesheet" href="<?= BASEURL?>css/mainstyle.css" />
+</head>
+<body  class="profilebody">
     <div class="site-mobile-menu site-navbar-target">
       <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-close">
@@ -59,16 +68,57 @@
           </div>
         </div>
       </div>
-      
-
     </nav>
-    
-      <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        <?php if(!isset($data['userauth'])): ?>
-          var toastElement = document.querySelector('.toast');
-          var toast = new bootstrap.Toast(toastElement);
-          toast.show();
-        <?php endif; ?>
-      });
-      </script>
+<section class="h-100 gradient-custom-2" style="padding-top: 100px;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center">
+      <div class="col col-lg-9 col-xl-8">
+        <div class="card">
+          <div class="rounded-top text-white d-flex flex-row" style="background-image:  url('<?= BASEURL; ?>images/pattern.jpg');">
+            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                style="width: 150px; z-index: 1">
+              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark text-body" data-mdb-ripple-color="dark" style="z-index: 1;">
+                Edit profile
+              </button>
+            </div>
+            <div class="ms-3" style="margin-top: 130px;">
+              <h5>Andy Horwitz</h5>
+              <p>New York</p>
+            </div>
+          </div>
+          <div class="p-4 text-black bg-body-tertiary">
+            <div class="d-flex justify-content-end text-center py-1 text-body">
+              <div>
+                <p class="mb-1 h5">253</p>
+                <p class="small text-muted mb-0">Photos</p>
+              </div>
+              <div class="px-3">
+                <p class="mb-1 h5">1026</p>
+                <p class="small text-muted mb-0">Followers</p>
+              </div>
+              <div>
+                <p class="mb-1 h5">478</p>
+                <p class="small text-muted mb-0">Following</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4 text-black">
+            <div class="mb-5  text-body">
+              <p class="lead fw-normal mb-1">About</p>
+              <div class="p-4 bg-body-tertiary">
+                <p class="font-italic mb-1">Web Developer</p>
+                <p class="font-italic mb-1">Lives in New York</p>
+                <p class="font-italic mb-0">Photographer</p>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

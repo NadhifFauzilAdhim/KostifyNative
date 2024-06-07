@@ -1,5 +1,5 @@
 <?php 
-define('BASEURL','http://localhost:8080/kostifynative/public/');
+define('BASEURL','http://localhost:8080/kostifynative/');
 define('DB_HOST','localhost');
 define('DB_USER','root');
 define('DB_PASS','');

@@ -214,7 +214,7 @@
             <div class="col-lg-4" data-aos="fade" data-aos-delay="300">
               <div class="d-flex feature-h">
                 <span class="wrap-icon me-3">
-                <img src="<?=BASEURL?>images/author.png" alt="" width="80px" class="rounded-circle"
+                <img src="https://img.icons8.com/color/96/user-male-circle--v1.png" alt="" width="80px" height="80px" class="rounded-circle"
                 >
                 </span>
                 <div class="feature-text">
@@ -298,7 +298,7 @@
                   <div class="headings d-flex justify-content-between align-items-center mb-3">
                       <h5>Comment</h5>
                   </div>
-                  <?php if(isset( $data['userauth'])):?>
+                  <?php if(isset( $data['userauth'])&& $data['userauth']['is_verified']):?>
                   <div class="comment-add mb-4">
                   <form action="<?=BASEURL?>home/comment" method="POST">
                   <div class="mb-3">
@@ -316,7 +316,7 @@
                   <?php else:?>
                    <div class="alert alert-warning text-center" role="alert">
                     <a href="<?= BASEURL?>login" class="link-dark">
-                    Login untuk menambahkan komentar <span class="icon-external-link"></span>
+                    Login dan Verifikasi Akun untuk menambahkan komentar <span class="icon-external-link"></span>
                     </a>
                   </div>
                   <?php endif?>
@@ -350,7 +350,7 @@
                   </div>
                   <?php endforeach?>
                   <?php else:?>
-                    <h1 class="text-center">Tidak Ada Komentar</h1>
+                    <h4 class="text-center">Tidak Ada Komentar</h4>
                   <?php endif?>
               </div>
           </div>

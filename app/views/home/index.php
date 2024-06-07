@@ -24,7 +24,17 @@ foreach ($data['lists'] as $properti) {
 }
 ?>
 
-<!-- POP UP Informasi -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body text-center">
+      <img src="<?= BASEURL?>/images/search.png" width="50px" alt="">
+        <p>Haii Seeker !! <br>Login Untuk Mengakses Fitur</p>
+        <a href="<?=BASEURL?>login"><i class="bi bi-box-arrow-in-left me-1"></i>Login</a>
+    </div>
+  </div>
+</div>
+
+
     <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -137,7 +147,7 @@ foreach ($data['lists'] as $properti) {
           </h4>
        
           <form
-            action="/kostifynative/public/"
+            action="/kostifynative/"
             method="GET"
             class="custom-form mt-4 pt-2 mb-5"
             role="search"
@@ -335,108 +345,6 @@ foreach ($data['lists'] as $properti) {
 
         
       </section>
-      
-
-    <!-- <section class="features-1">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-lg-3 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="400">
-            <div class="box-feature">
-              <img src="<?= BASEURL?>images/checklist.png" alt="" width="70px">
-              <h3 class="mb-3">Informasi </h3>
-              <p>
-                Dapatkan update real-time tentang ketersediaan properti .
-              </p>
-              <button type="button" class="btn btn-primary" id="showModal1Button">Selengkapnya</button>
-            </div>
-          </div>
-          <div class="col-12 col-lg-3 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="300">
-            <div class="box-feature">
-              <img src="<?= BASEURL?>images/house.png" alt="" width="70px">
-              <h3 class="mb-3">Sewa Property</h3>
-              <p>
-                Temukan dan sewa tempat tinggal yang sesuai dengan kebutuhanmu.
-              </p>
-              
-              <button type="button" class="btn btn-primary" id="showModal2Button">Selengkapnya</button>
-            </div>
-          </div>
-          <div class="col-12 col-lg-3 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="500">
-            <div class="box-feature">
-              <img src="<?= BASEURL?>images/Pay.png" alt="" width="70px">
-              <h3 class="mb-3">Bayar</h3>
-              <p>
-                Kelola pembayaran sewa properti secara mudah dan efisien.
-              </p>
-              <button type="button" class="btn btn-primary" id="showModal3Button">Selengkapnya</button>
-            </div>
-          </div>
-         
-          <div class="col-12 col-lg-3 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="600">
-            <div class="box-feature">
-              <img src="<?= BASEURL?>images/deal.png" alt="" width="70px">
-              <h3 class="mb-3">Tempati</h3>
-              <p>
-                Tempati Tempat tinggal pilihan anda <br><br>
-              </p>
-              <button type="button" class="btn btn-primary" id="showModal4Button">Selengkapnya</button>
-            </div>
-          </div>
-        </div>
-        <div class="row section-counter mt-5 pb-5 text-center">
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-whi"><?=$countKost?></span></span
-              >
-              <span class="caption text-black-50">KOST LIST</span>
-            </div>
-          </div>
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-dark"><?=$countKontrakan?></span></span
-              >
-              <span class="caption text-black-50">KONTRAKAN LIST</span>
-            </div>
-          </div>
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="500"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-dark"><?=$countPaviliun?></span></span
-              >
-              <span class="caption text-black-50">PAVILIUN LIST</span>
-            </div>
-          </div>
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="600"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-primary"><?=count($data['lists'])?></span></span
-              >
-              <span class="caption text-black-50">TOTAL</span>
-            </div>
-          </div>
-        </div>
-      </div>
-     
-    </section> -->
-
     <div class="section " data-aos="fade-up" data-aos-delay="300">
       <div class="container">
         <div class="row mb-5 align-items-center">
@@ -466,14 +374,10 @@ foreach ($data['lists'] as $properti) {
                   $images = explode(',', $image_filenames);
                   ?>
                   <div class="justify-content-center">
-                  <a href="home/detail/<?=$list['slug'] ?>" class="img">
-                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" style=" height: 400px; object-fit: cover;" />
+                  <a href="<?=BASEURL?>home/detail/<?=$list['slug'] ?>" class="img">
+                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 400px; object-fit: cover;" />
                   </a>
                   </div>
-
-                  
-
-                 
                   <div class="property-content">
                     <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
                     <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>

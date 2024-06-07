@@ -1,47 +1,4 @@
-  <!-- Konfirmasi Hapus -->
-  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel2">Set Post Privasi</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
 
-          <div class="modal-body text-center">
-          <img
-                    src="<?= BASEURL?>/images/privacy.png" 
-                    class="custom-block-image-featured img-fluid mx-auto d-block"
-                    alt=""
-                    width="200px"
-                  />
-                  <br>
-        <p>Set Privacy</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Apakah Anda yakin ingin menghapus post ini?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p class="text-center"><strong>Aksi ini akan menghapus</strong> </p>
-                <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Postingan</strong></p>
-                <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Komentar</strong></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
-            </div>
-          </div>
-        </div>
-      </div>
             <div class="flasher text-center">
             <?php Flasher::flash()?>
             </div>
@@ -57,73 +14,88 @@
                     </div>
                 </div>
             </div>
-
-          
-          
-        
             <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <?php foreach($data['getpropery'] as $list):?>
-                        <?php 
-                        $image_filenames = $list['image']; 
-                        $images = explode(',', $image_filenames);
-                        ?>
-                    <div class="col-sm-12 col-xl-4">
-                        <div class="bg-light rounded h-100 p-4">
+    <div class="row g-4">
+        <?php foreach($data['getpropery'] as $list): ?>
+            <?php 
+            $image_filenames = $list['image']; 
+            $images = explode(',', $image_filenames);
+            ?>
+            <div class="col-sm-12 col-xl-4">
+                <div class="bg-light rounded h-100 p-4">
+                    <a href="detail.html" class="img">
+                        <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" style="height: 280px; object-fit: cover; width:auto"/>
+                    </a>
+                    <span class="city d-block mb-3 mt-3 fw-bold"><?= htmlspecialchars($list['propertyname']) ?><span class="badge <?= $bg_color = ($list['type'] == 1 || $list['type'] == 3) ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
+                    <div class="price mb-2"><span>Rp. <?= number_format($list['price'], 0, ',', '.') ?></span></div>
+                    <div>
+                        <div class="specs d-flex mb-4">
+                            <span class="d-block d-flex align-items-center me-3">
+                                <i class="fa fa-bed me-2"></i>
+                                <h6 class="mb-0"><?= $list['available'] ?> Kamar</h6>
+                            </span>
+                            <span class="d-block d-flex align-items-center me-3">
+                                <i class="fa fa-bath me-2"></i>
+                                <h6 class="mb-0">Km <?= $list['km'] ?></h6>
+                            </span>
+                        </div>
+                        <div class="specs d-flex mb-4">
+                            <span class="d-block d-flex align-items-center me-3">
+                                <a class="btn btn-sm btn-warning" href="postedit.html"><i class="fa-regular fa-pen-to-square me-1"></i>Edit</a>
+                            </span>
+                            <span class="d-block d-flex align-items-center me-3">
+                            <form id="visibility-form-<?= $list['id'] ?>">
+                            <input type="hidden" name="postid" value="<?= $list['id'] ?>">
+                             <button type="button" class="btn btn-sm toggle-visibility" data-id="<?= $list['id'] ?>" data-visibility="<?= $list['visibility'] ?>">
+                              <i class="bi"></i><span></span>
+                            </button>
+                            </form>
 
-                            <a href="detail.html" class="img">
-                                <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" style=" height: 280px; object-fit: cover;"/>
-                            </a>
-                            <span class="city d-block mb-3 mt-3 fw-bold"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= $bg_color = ($list['type'] == 1 || $list['type'] == 3) ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?=$list['type_name']?></span></span>
-                            <div class="price mb-2"><span>Rp. <?= number_format( $list['price'], 0, ',', '.') ?></span></div>
-                            <div>
 
-
-
-                                <div class="specs d-flex mb-4">
-                                    <span class="d-block d-flex align-items-center me-3">
-                                        <i class="fa fa-bed me-2" ></i>
-                                        <h6 class="mb-0"><?=$list['available']?> Kamar</h6>
-                                       
-                                    </span>
-                                    <span class="d-block d-flex align-items-center me-3">
-                                        <i class="fa fa-bath me-2" ></i>
-                                        <h6 class="mb-0">Km <?=$list['km']?></h6>
-                                       
-                                    </span> 
-                                  
-                                </div>
-                                <div class="specs d-flex mb-4 ">
-                                    <span class="d-block d-flex align-items-center me-3">
-                                        
-                                        <a class="btn btn-sm btn-warning" href="postedit.html"> <i class="fa-regular fa-pen-to-square me-1"></i>Edit</a>
-                                       
-                                    </span>
-                                    <span class="d-block d-flex align-items-center me-3">
-                                        <form action="<?=BASEURL?>dashboard/visibility" method="POST">
-                                            <input type="hidden" name="visibility" value="<?= $list['visibility'] == 0 ? 1 : 0 ?>">
-                                            <input type="hidden" name="postid" value="<?=$list['id']?>">
-                                            <button type="submit" class="btn btn-sm btn-info <?= $list['visibility'] == 1 ? 'btn-info' : 'btn-danger' ?>"><i class="bi <?= $list['visibility'] == 1 ? 'bi-eye' : 'bi-eye-slash' ?> me-1"></i><?= $list['visibility'] == 1 ? 'Public' : 'Private' ?></button>
+                            </span>
+                            <div class="btn-group   ">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                <ul class="dropdown-menu text-center">
+                                    <li>
+                                        <form action="<?= BASEURL ?>/dashboard/deletePost" method="POST" id="deleteForm-<?= $list['id'] ?>">
+                                            <input type="hidden" name="property_id" value="<?= $list['id'] ?>">
+                                            <button type="button" class="btn btn-sm btn-info btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal-<?= $list['id'] ?>"><i class="bi bi-trash me-1"></i>Hapus</button>
                                         </form>
-                                    </span>
-                                    
-                                        <div class="btn-group">
-                                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                  Action
-                                                </button>
-                                        <ul class="dropdown-menu text-center">
-                                                    <li><button class="btn btn-sm btn-danger" id="showModal1Button"><i class="fa-solid fa-trash me-1"></i>Hapus</button></li>
-                                                    
-                                        </ul>
-                                        </div>
-                                </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                   <?php endforeach?>
-                 
                 </div>
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteConfirmationModal-<?= $list['id'] ?>" tabindex="-1" aria-labelledby="deleteModalLabel-<?= $list['id'] ?>" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel-<?= $list['id'] ?>">Konfirmasi Hapus</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <p class="text-center"><strong> Apakah Anda yakin ingin menghapus Property ini?</strong> </p>
+                        <h4 class="text-center"><strong> <?= htmlspecialchars($list['propertyname']) ?></strong> </h4>
+                        <p class="text-center mb-3"><strong>Aksi ini akan menghapus</strong> </p>
+                        <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Postingan</strong></p>
+                        <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Komentar</strong></p>
+                        <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Resident</strong></p>
+                        <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Payment Status</strong></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-danger confirm-delete" data-id="<?= $list['id'] ?>">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
@@ -147,21 +119,86 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="<?=BASEURL?>js/bootstrap.bundle.min.js"></script>
     <script src="<?=BASEURL?>js/main.js"></script>
+    
     <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                // Add event listeners to all confirm delete buttons
+                document.querySelectorAll('.confirm-delete').forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var id = this.getAttribute('data-id');
+                        var form = document.getElementById('deleteForm-' + id);
+                        if (form) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+    </script>
+    <script>
+        
+                document.addEventListener('DOMContentLoaded', function() {
+                var toggleVisibilityButtons = document.querySelectorAll('.toggle-visibility');
 
-        // Function to show modal when any button with class 'showModal1Button' is clicked
-        var showModalButtons = document.querySelectorAll('#showModal1Button');
-        showModalButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var myModal = new bootstrap.Modal(document.getElementById('exampleModal1'));
-                myModal.show();
-            });
-           
-        });
-         document.getElementById('showModal2Button').addEventListener('click', function() {
-                var myModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
-                 myModal.show();
-            });
+                toggleVisibilityButtons.forEach(function(button) {
+                var initialVisibility = button.getAttribute('data-visibility');
+                updateButtonAppearance(button, initialVisibility);
+
+                button.addEventListener('click', function() {
+                    var postId = this.getAttribute('data-id');
+                    var currentVisibility = this.getAttribute('data-visibility');
+                    var newVisibility = currentVisibility == 1 ? 0 : 1;
+                    var button = this; 
+                    updateButtonAppearance(button, newVisibility);
+                    button.setAttribute('data-visibility', newVisibility);
+
+                    // AJAX request to server
+                    fetch('<?= BASEURL ?>dashboard/visibility', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'postid=' + postId + '&visibility=' + newVisibility
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.success) {
+                            // If the update failed, revert the button to the previous state
+                            updateButtonAppearance(button, currentVisibility);
+                            button.setAttribute('data-visibility', currentVisibility);
+                            alert('Error updating visibility');
+                        } else {
+                            // Update other elements if necessary
+                            var statusElement = document.querySelector('#status-' + postId);
+                            if (statusElement) {
+                                statusElement.textContent = newVisibility == 1 ? 'Public' : 'Private';
+
+                            }
+                        }
+                    })
+                    .catch(error => {
+                    
+                        console.error('Error:', error);
+                    });
+                });
+                });
+
+                function updateButtonAppearance(button, visibility) {
+                var icon = button.querySelector('i');
+                var text = button.querySelector('span');
+
+                if (visibility == 1) {
+                    icon.className = 'bi bi-eye me-1';
+                    text.textContent = 'Public';
+                    button.className = 'btn btn-sm btn-info toggle-visibility';
+                } else {
+                    icon.className = 'bi bi-eye-slash me-1';
+                    text.textContent = 'Private';
+                    button.className = 'btn btn-sm btn-danger toggle-visibility';
+                }
+                }
+                });
+
+
     </script>
 </body>
 

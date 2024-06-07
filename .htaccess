@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Redirect Halaman langsung ke folder public
+RewriteCond %{REQUEST_URI} !^/kostifynative/public/
+RewriteCond %{REQUEST_URI} !^/kostifynative/public/index.php$
+RewriteRule ^(.*)$ /kostifynative/public/$1 [L]
+
+#DEPLOY RULE
+
+# RewriteEngine On
+
+# Setelah Deploy
+# RewriteCond %{REQUEST_URI} !^/public/
+# RewriteCond %{REQUEST_URI} !^/public/index.php$
+# RewriteRule ^(.*)$ /public/$1 [L]

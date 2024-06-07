@@ -39,8 +39,10 @@ class Dashboard extends Controller {
                 $this->view('components/dashboard/header',$data);
                 $this->view('components/dashboard/sidebarnav',$data);
                 $this->view('dashboard/post',$data);
+                }else{
+                    echo '403 Access forbidden';
                 }
-                echo '403 Access forbidden';
+              
         }
         else {
             header('Location: ' . BASEURL . 'login');
@@ -152,5 +154,41 @@ public function storePost() {
         exit;
     }
     
+}
+
+public function deletePost(){
+    if(isset($_SESSION['user'])){
+        if($_SESSION['user']['is_verified'] && $_SESSION['user']['is_owner']){
+            $result = $this->model('Dashboard_model')->deletePost($_POST);
+            if($result > 0){
+                header('Location: ' . BASEURL . 'dashboard/post');
+                Flasher::setFlash('Post','Dihapus','success');
+                exit;
+            }elseif($result == -1){
+                header('Location: ' . BASEURL . 'dashboard/post');
+                Flasher::setFlash('Gambar','Gagal Dihapus','danger');
+                exit;
+            }elseif($result == -2){
+                header('Location: ' . BASEURL . 'dashboard/post');
+                Flasher::setFlash('Gambar','Tidak Ditemukan','danger');
+                exit;
+            }
+            elseif($result == -3){
+                header('Location: ' . BASEURL . 'dashboard/post');
+                Flasher::setFlash('Post','Tidak Ditemukan','danger');
+                exit;
+            }
+            else{
+                header('Location: ' . BASEURL . 'dashboard/post');
+                Flasher::setFlash('Post','Gagal Dihapus','danger');
+                exit;
+            }
+        }else{
+            echo '403 Access Action';
+        }
+    }else{
+        header('Location: ' . BASEURL . 'login');
+        exit;
+    }
 }
 }
