@@ -12,7 +12,7 @@
         <header class="header">
             <nav class="nav container">
                 <a href="#" class="nav__logo">
-                    <img src="<?=BASEURL?>/images/kostifyop.png" width="100px" alt="">
+                    <img src="<?=BASEURL?>/images/kostifydev.png" width="300px" alt="">
                 </a>
 
                 <div class="nav__menu" id="nav-menu">

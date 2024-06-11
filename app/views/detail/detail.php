@@ -33,7 +33,7 @@
             <div class="mb-3">
             <label for="price" class="form-label">Lokasi</label>
             <input class="form-control" type="text" value="<?=htmlspecialchars($list['location'])?>" aria-label="readonly input example" readonly>
-            </div>
+            </div>  
             Permintaan Anda akan dikirimkan kepada pemilik properti. Pastikan untuk memeriksa pilihan Anda dengan teliti sebelum mengirimkan permintaan. Untuk melihat status permintaan Anda, silakan masuk ke dashboard akun Anda.
             <form action="<?=BASEURL?>home/addrequest" method="POST">
             <div class="mb-3"> 
@@ -42,6 +42,7 @@
             <div class="mb-3">
               <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?=$data['userauth']['id']?>"> 
             </div>
+            <input type="hidden" value="<?=$_SESSION['csrf_token']?>" name="csrf_token">
             <br> <p class="text-warning text-center">Ketuk tombol "Konfirmasi" untuk Melanjutkan.</p>
             <div class="buttoncon text-center">
             <button type="submit" class="btn btn-primary">Konfirmasi</button>
@@ -301,6 +302,7 @@
                   <?php if(isset( $data['userauth'])&& $data['userauth']['is_verified']):?>
                   <div class="comment-add mb-4">
                   <form action="<?=BASEURL?>home/comment" method="POST">
+                  <input type="hidden" value="<?=$_SESSION['csrf_token']?>" name="csrf_token">
                   <div class="mb-3">
                     <input type="text" class="form-control" id="comment" name="comment_body">
                   </div>
@@ -310,6 +312,7 @@
                   <div class="mb-3">
                     <input type="hidden" class="form-control" id="property_id" name="property_id" value="<?=$list['id']?>">
                   </div>
+                  
                   <button type="submit" class="btn btn-primary">Buat Komentar</button>
                 </form>
                   </div>
@@ -338,6 +341,7 @@
                       <?php if(isset( $data['userauth'])):?>
                         <?php if($comment['user_id'] == $data['userauth']['id']):?>
                           <form action="<?=BASEURL?>home/delComment" method="POST" >
+                          <input type="hidden" value="<?=$_SESSION['csrf_token']?>" name="csrf_token">
                           <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
                           <button type="submit" class="btn btn-link btn-sm link-danger ">Hapus</button>
                          </form>

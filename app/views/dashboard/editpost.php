@@ -1,47 +1,48 @@
-<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Apakah Anda yakin ingin menghapus post ini?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="container-fluid pt-4 px-4">
+                <div class="row g-4 ">
+                   
+                        <?php 
+                        $image_filenames = $data['getpost']['image']; 
+                        $images = explode(',', $image_filenames);
+                        ?>
+                    <div class="col-sm-12 col-xl-4">
+                        <div class="bg-light rounded h-100 p-4">
+                                <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 280px; object-fit: cover;"/>
+                                <h6 class="mt-2 text-center">Poster</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-4">
+                        <div class="bg-light rounded h-100 p-4">
+                                <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[1] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 280px; object-fit: cover;"/>
+                                <h6 class="mt-2 text-center">Gambar 1</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-4">
+                        <div class="bg-light rounded h-100 p-4">
+                                <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[2] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 280px; object-fit: cover;"/>
+                                <h6 class="mt-2 text-center">Gambar 2</h6>
+                        </div>
+                    </div>
+             
+                    
+                 
+                </div>
             </div>
-            <div class="modal-body">
-                <p class="text-center"><strong>Aksi ini akan menghapus</strong> </p>
-                <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Postingan</strong></p>
-                <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Komentar</strong></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
-            </div>
-          </div>
-        </div>
-      </div>
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-light rounded h-100 p-4">
                         <?php Flasher::flash()?>
-                            <h5 class="mb-4 text-center">Buat Post Baru</h5>
-                            <form method="post" enctype="multipart/form-data" action="<?=BASEURL?>dashboard/storePost">
-                            <input type="hidden" value="<?=$_SESSION['csrf_token']?>" name="csrf_token">
+                            <h5 class="mb-4 text-center">Edit Post <br><strong class="text-primary "><?=$data['getpost']['propertyname']?></strong></h5>
+                            <form method="post" enctype="multipart/form-data" action="<?=BASEURL?>dashboard/editpost">
+                            <input type="hidden" class="form-control" id="id" name="id" value="<?=$data['getpost']['id']?>">
                                 <div class="mb-3">
                                     <label for="propertyname"  class="form-label">Nama Tempat Tinggal</label>
 
-                                    <input type="text" class="form-control" id="propertyname" name="propertyname">
+                                    <input type="text" class="form-control" id="propertyname" name="propertyname" value="<?=$data['getpost']['propertyname']?>">
                                    
                                 </div>
-                                <label for="slug" class="form-label">Custom Link</label>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon3">https://kostify.my.id/detail/</span>
-                                    <input type="text" class="form-control" id="slug" name="slug" required>
-                                    <div id="slugFeedback" class="invalid-feedback">    
-                                        Slug sudah digunakan, silakan gunakan yang lain.
-                                    </div>
-                                    <div id="slugFeedbackValid" class="valid-feedback">
-                                        Slug tersedia.
-                                    </div>
-                                </div>
+                                
                                 <label for="category" class="form-label">Jenis Tempat Tinggal</label>
                                 <div class="input-group mb-3">
                                     
@@ -65,15 +66,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="available"  class="form-label">Jumlah Tersedia</label>
-                                    <input type="text" class="form-control" id="available" name="available">
+                                    <input type="text" class="form-control" id="available" name="available" value="<?=$data['getpost']['available']?>"> 
                                 </div>
                                 <div class="mb-3">
                                     <label for="km"  class="form-label">Kamar Mandi</label>
-                                    <input type="text" class="form-control" id="km" name="km">
+                                    <input type="text" class="form-control" id="km" name="km" value="<?=$data['getpost']['km']?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="price"  class="form-label">Harga</label>
-                                    <input type="text" class="form-control" id="price" name="price">
+                                    <input type="text" class="form-control" id="price" name="price" value="<?=$data['getpost']['price']?>">
                                 </div>
                                 <label for="payment_type" class="form-label">Tipe Pembayaran</label>
                                 <div class="input-group mb-3">
@@ -106,18 +107,18 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="location"  class="form-label">Alamat Lengkap</label>
-                                    <input type="text" class="form-control" id="location" name="location">
+                                    <input type="text" class="form-control" id="location" name="location" value="<?=$data['getpost']['location']?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="facility" class="form-label">Tulis tentang tempat tinggal</label>
-                                    <input id="facility" type="hidden" name="facility">
+                                    <input id="facility" type="hidden" name="facility" value="<?=$data['getpost']['facility']?>">
                                     <trix-editor input="facility"></trix-editor>
                                 </div>
                                 <div class="mb-3">
                                     <div class="container mt-5">
-                                    <div class="card">
+                                      <div class="card">
                                           <div class="card-body">
-                                            <label for="image" class="form-label">Upload Gambar Poster <small>*Jpg Png Webp Jpeg</small></label>
+                                            <label for="image" class="form-label">Upload Gambar Poster <em>*Jpg Png Webp Jpeg</em></label>
                                             <div class="d-flex justify-content-center mt-3">
                                             <img class="img-preview img-fluid mb-3 col-sm-6 property-image" src="" alt="">
                                             </div>
@@ -130,9 +131,9 @@
                                   </div>
                                   <div class="mb-3">
                                     <div class="container mt-5">
-                                    <div class="card">
+                                      <div class="card">
                                           <div class="card-body">
-                                            <label for="image2" class="form-label">Upload Gambar 1 <small>*Jpg Png Webp Jpeg</small></label>
+                                            <label for="image2" class="form-label">Upload Gambar 1 <em>*Jpg Png Webp Jpeg</em></label>
                                             <div class="d-flex justify-content-center mt-3">
                                             <img class="img-preview2 img-fluid mb-3 col-sm-6 property-image" src="" alt="">
                                             </div>
@@ -143,9 +144,9 @@
                                   </div>
                                   <div class="mb-3">
                                     <div class="container mt-5">
-                                    <div class="card">
+                                      <div class="card">
                                           <div class="card-body">
-                                            <label for="image3" class="form-label">Upload Gambar 2 <small>*Jpg Png Webp Jpeg</small></label>
+                                            <label for="image3" class="form-label">Upload Gambar 2 <em>*Jpg Png Webp Jpeg</em></label>
                                             <div class="d-flex justify-content-center mt-3">
                                             <img class="img-preview3 img-fluid mb-3 col-sm-6 property-image" src="" alt="">
                                             </div>
@@ -181,7 +182,7 @@
         });
     </script>
 
-<script>
+    <script>
         function previewImage(inputId, previewId){
             const imageInput = document.querySelector(inputId);
             const imgPreview = document.querySelector(previewId);
@@ -194,30 +195,9 @@
             }
         }
     </script>
-<script>
-$(document).ready(function() {
-    $('#slug').on('change', function() {
-        var slug = $(this).val();
-        $.ajax({
-            url: '<?= BASEURL; ?>dashboard/checkSlug',
-            type: 'POST',
-            data: {slug: slug},
-            success: function(response) {
-                if(response == '1') {
-                    $('#slug').removeClass('is-valid').addClass('is-invalid');
-                    $('#slugFeedback').show();
-                    $('#slugFeedbackValid').hide();
-                } else {
-                    $('#slug').removeClass('is-invalid').addClass('is-valid');
-                    $('#slugFeedback').hide();
-                    $('#slugFeedbackValid').show();
-                }
-            }
-        });
-    });
-});
-</script>
+
+
 </body>
 
-</html>
+
 

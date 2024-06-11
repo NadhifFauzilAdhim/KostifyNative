@@ -4,7 +4,7 @@
        
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="<?=BASEURL?>home" class="navbar-brand mx-4 mb-3">
+                <a href="<?=BASEURL?>" class="navbar-brand mx-4 mb-3">
                    <img src="<?=BASEURL?>images/Kostify.png" alt="" width="150px" >
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -48,9 +48,9 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-paper-plane me-2"></i>Request</a>
                         <div class="dropdown-menu  border-0">
-                            <a href="request.html" class="dropdown-item mx-3"><i class="fa-regular fa-envelope"></i> Request</a>
+                            <a href="<?=BASEURL?>dashboard/request" class="dropdown-item mx-3"><i class="fa-regular fa-envelope"></i> Request</a>
                             <?php if($data['userauth']['is_owner'] == 0):?>
-                            <a href="requeststatus.html" class="dropdown-item mx-3"><i class="fa-regular fa-eye"></i> Request Status</a>
+                            <a href="<?=BASEURL?>dashboard/request" class="dropdown-item mx-3"><i class="fa-regular fa-eye"></i> Request Status</a>
                             <?php endif?>
                            
                         </div>

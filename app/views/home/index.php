@@ -552,7 +552,7 @@ foreach ($data['lists'] as $properti) {
         <div class="row justify-content-between mb-5">
           <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
             <div class="img-about dots">
-              <img src="<?=BASEURL?>images/kamar3.png" alt="Image" class="img-fluid" />
+              <img src="<?=BASEURL?>images/kamar1.png" alt="Image" class="img-fluid" />
             </div>
           </div>
           <div class="col-lg-4">

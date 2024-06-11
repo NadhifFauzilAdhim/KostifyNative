@@ -24,7 +24,7 @@
             <div class="col-sm-12 col-xl-4">
                 <div class="bg-light rounded h-100 p-4">
                     <a href="detail.html" class="img">
-                        <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid" style="height: 280px; object-fit: cover; width:auto"/>
+                        <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style="height: 280px; object-fit: cover; width:auto"/>
                     </a>
                     <span class="city d-block mb-3 mt-3 fw-bold"><?= htmlspecialchars($list['propertyname']) ?><span class="badge <?= $bg_color = ($list['type'] == 1 || $list['type'] == 3) ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
                     <div class="price mb-2"><span>Rp. <?= number_format($list['price'], 0, ',', '.') ?></span></div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="specs d-flex mb-4">
                             <span class="d-block d-flex align-items-center me-3">
-                                <a class="btn btn-sm btn-warning" href="postedit.html"><i class="fa-regular fa-pen-to-square me-1"></i>Edit</a>
+                                <a class="btn btn-sm btn-success" href="<?=BASEURL?>dashboard/edit/<?=$list['slug']?>"><i class="fa-regular fa-pen-to-square me-1"></i>Edit</a>
                             </span>
                             <span class="d-block d-flex align-items-center me-3">
                             <form id="visibility-form-<?= $list['id'] ?>">
@@ -59,6 +59,7 @@
                                     <li>
                                         <form action="<?= BASEURL ?>/dashboard/deletePost" method="POST" id="deleteForm-<?= $list['id'] ?>">
                                             <input type="hidden" name="property_id" value="<?= $list['id'] ?>">
+                                            <input type="hidden" value="<?=$_SESSION['csrf_token']?>" name="csrf_token">
                                             <button type="button" class="btn btn-sm btn-info btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal-<?= $list['id'] ?>"><i class="bi bi-trash me-1"></i>Hapus</button>
                                         </form>
                                     </li>
@@ -122,7 +123,6 @@
     
     <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                // Add event listeners to all confirm delete buttons
                 document.querySelectorAll('.confirm-delete').forEach(function(button) {
                     button.addEventListener('click', function() {
                         var id = this.getAttribute('data-id');
@@ -135,7 +135,6 @@
             });
     </script>
     <script>
-        
                 document.addEventListener('DOMContentLoaded', function() {
                 var toggleVisibilityButtons = document.querySelectorAll('.toggle-visibility');
 
@@ -162,13 +161,11 @@
                     .then(response => response.json())
                     .then(data => {
                         if (!data.success) {
-                            // If the update failed, revert the button to the previous state
                             updateButtonAppearance(button, currentVisibility);
                             button.setAttribute('data-visibility', currentVisibility);
                             alert('Error updating visibility');
                         } else {
-                            // Update other elements if necessary
-                            var statusElement = document.querySelector('#status-' + postId);
+                          var statusElement = document.querySelector('#status-' + postId);
                             if (statusElement) {
                                 statusElement.textContent = newVisibility == 1 ? 'Public' : 'Private';
 

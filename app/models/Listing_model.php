@@ -1,6 +1,5 @@
 <?php 
 class Listing_model {
-    private $table = 'listings';
     private $db; 
 
     public function __construct()
@@ -17,8 +16,7 @@ class Listing_model {
             JOIN region ON region.id = property.region_id 
             JOIN type ON type.id = property.type
             WHERE (property.propertyname LIKE :keyword 
-            OR region.region_name LIKE :keyword OR type.type_name LIKE :keyword) AND property.visibility = 1
-
+            OR region.region_name LIKE :keyword OR type.type_name LIKE :keyword) AND property.visibility = true
             ORDER BY property.id DESC";
 
             $this->db->query($query);
@@ -27,7 +25,7 @@ class Listing_model {
             return $this->db->resultSet();
         }
     
-        $this->db->query('SELECT property.*,category.pro_category,region.region_name,type.type_name FROM property JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id JOIN type ON type.id = property.type WHERE property.visibility = 1 ORDER BY id DESC ');
+        $this->db->query('SELECT property.*,category.pro_category,region.region_name,type.type_name FROM property JOIN category ON category.id = property.category_id JOIN region ON region.id = property.region_id JOIN type ON type.id = property.type WHERE property.visibility = true ORDER BY id DESC ');
         return $this->db->resultSet();
     }
 

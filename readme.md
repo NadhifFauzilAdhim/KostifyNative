@@ -5,7 +5,7 @@
 
 ###
 
-<h2 align="center">Kostify Property Find Native</h2>
+<h2 align="center">Kostify Native MVC</h2>
 
 ###
 
@@ -28,7 +28,9 @@
 - Forgot Password
 - Email Verification with SMTP
 - Dashboard
-- Post Property
+- Post, Edit, Delete Property
+- Manage Resident
+- Manage Payment
 - Property Request
 - Upload Images
 

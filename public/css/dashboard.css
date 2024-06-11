@@ -318,6 +318,9 @@
       .property-item .property-content .specs .caption {
         font-size: 13px; }
 
+        .property-image{
+            border-radius: 20px;
+        }
 
 
         
