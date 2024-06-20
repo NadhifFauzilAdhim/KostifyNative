@@ -1,6 +1,9 @@
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
-
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            </div>
+        </div>
        
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
@@ -23,14 +26,12 @@
                     
                     <a href="<?=BASEURL?>dashboard" class="nav-item nav-link <?= $currentUrl == 'dashboard' ? 'active' : '' ?>"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <?php if($data['userauth']['is_verified']):?>
-                    <?php if($data['userauth']['is_owner'] == 1):?>
+                    <?php if($data['userauth']['is_owner']):?>
                     <div class="nav-item dropdown">
 
                         <a href="#" class="nav-link dropdown-toggle <?= ($currentUrl == 'post' || $currentUrl == 'createpost') ? 'active' : '' ?>" data-bs-toggle="dropdown"><i class="fa-solid fa-house me-2"></i>My Properties</a>
                         <div class="dropdown-menu  border-0">
                             <a href="<?=BASEURL?>dashboard/post" class="dropdown-item mx-3"><i class="fa fa-plus me-2"></i>Post</a>
-                            <a href="resident.html" class="dropdown-item mx-3"><i class="fa-solid fa-user me-2"></i>Resident</a>
-                           
                         </div>
                         
                     </div>
@@ -38,27 +39,26 @@
                     <?php else:?>
                         <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-house me-2"></i><span class="badge bg-danger rounded-pill">Not Verified</span></a>
-                       
-                        
                     </div>
                     <?php endif?>
-                    <?php if($data['userauth']['is_owner'] == 0):?>
+                    <?php if($data['userauth']['is_owner']):?>
+                    <a href="<?=BASEURL?>dashboard/tenant" class="nav-item nav-link <?= ($currentUrl == 'tenant') ? 'active' : '' ?>"><i class="fa-solid fa-user me-2"></i>Tenant</a>
+                    <?php endif?>
+                    <?php if(!$data['userauth']['is_owner']):?>
                     <a href="myproperties.html" class="nav-item nav-link"><i class="fa-solid fa-house-circle-check me-2"></i>My Rent</a>
                     <?php endif?>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-paper-plane me-2"></i>Request</a>
                         <div class="dropdown-menu  border-0">
-                            <a href="<?=BASEURL?>dashboard/request" class="dropdown-item mx-3"><i class="fa-regular fa-envelope"></i> Request</a>
-                            <?php if($data['userauth']['is_owner'] == 0):?>
+                             <a href="<?= $data['userauth']['is_owner'] == 1 ? BASEURL . 'dashboard/request' : BASEURL . 'dashboard/userrequest' ?>" class="dropdown-item mx-3"><i class="fa-regular fa-envelope"></i> Request</a>
+                            <?php if(!$data['userauth']['is_owner']):?>
                             <a href="<?=BASEURL?>dashboard/request" class="dropdown-item mx-3"><i class="fa-regular fa-eye"></i> Request Status</a>
                             <?php endif?>
-                           
                         </div>
-                        
                     </div>
-                  
-                    
+                    <a href="<?=BASEURL?>dashboard/payment" class="nav-item nav-link <?= $currentUrl == 'payment' ? 'active' : '' ?>"><i class="fa-solid fa-credit-card me-2"></i>Payment</a>
                 </div>
+                
             </nav>
         </div>
 

@@ -74,7 +74,7 @@
     width: 250px;
     height: 100vh;
     overflow-y: auto;
-    background: var(--light);
+    background: #f6f9fc;
     transition: 0.5s;
     z-index: 999;
 }
@@ -322,5 +322,6 @@
             border-radius: 20px;
         }
 
+        
 
         

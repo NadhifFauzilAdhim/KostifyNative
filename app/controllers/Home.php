@@ -26,9 +26,12 @@ class Home extends Controller{
     }
     public function listing(){
         $data['title'] ='Find';
+        if(isset($_SESSION['user'])){
+            $data['userauth'] = $_SESSION['user'];
+        }
         $data['lists'] = $this->model('Listing_model')->getAllList();
         $this->view('components/header',$data);
-        $this->view('components/navbar');
+        $this->view('components/navbar',$data);
         $this->view('alllist/listing',$data);
        
     }

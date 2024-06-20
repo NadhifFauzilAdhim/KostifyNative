@@ -10,9 +10,10 @@
                 Apakah Anda yakin ingin menerima permintaan ini?
             </div>
             <div class="modal-footer">
-                <form action="<?=BASEURL?>dashboard/acceptRequest" method="POST" id="acceptForm">
+                <form action="<?=BASEURL?>dashboard/requestHandler" method="POST" id="acceptForm">
                     <input type="hidden" id="csrf_token" name="csrf_token" value="<?= $_SESSION['csrf_token']?>">
-                    <input type="hidden" id="acceptPropertyId" name="property_id">
+                    <input type="hidden" id="acceptPropertyId" name="id">
+                    <input type="hidden" id="action" name="action" value="1">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Terima</button>
                 </form>
@@ -32,8 +33,10 @@
                 Apakah Anda yakin ingin menolak permintaan ini?
             </div>
             <div class="modal-footer">
-                <form action="<?=BASEURL?>dashboard/declineRequest" method="POST" id="declineForm">
-                    <input type="hidden" id="declinePropertyId" name="property_id">
+                <form action="<?=BASEURL?>dashboard/requestHandler" method="POST" id="declineForm">
+                    <input type="hidden" id="csrf_token" name="csrf_token" value="<?= $_SESSION['csrf_token']?>">
+                    <input type="hidden" id="declinePropertyId" name="id">
+                    <input type="hidden" id="action" name="action" value="0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-danger">Tolak</button>
                 </form>
@@ -46,7 +49,7 @@
             <?php Flasher::flash()?>
             </div>
                 
-                <div class="bg-light text-center rounded p-4">
+                <div class="card shadow p-3  text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Request</h6>
                         <a href="">Show All</a>
@@ -86,8 +89,8 @@
                                     </div></td>
                                     <td><h6 class="mb-0">Rp. <?= number_format( $data['price'], 0, ',', '.') ?></u></strong>/<?php if($data['payment_type'] == 1){echo "Bulan";}elseif($data['payment_type'] == 0){echo " Tunai";}else{echo $data['payment_type'] . " Bulan";}?></h6></td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" onclick="confirmAccept(<?=$data['property_id']?>)">Terima</button>
-                                        <button class="btn btn-sm btn-danger" onclick="confirmDecline(<?=$data['property_id']?>)">Tolak</button>
+                                        <button class="btn btn-sm btn-primary" onclick="confirmAccept(<?=$data['id']?>)">Terima</button>
+                                        <button class="btn btn-sm btn-danger" onclick="confirmDecline(<?=$data['id']?>)">Tolak</button>
                                     </td>
                                     </td>
                                 </tr>
@@ -100,6 +103,8 @@
                     </div>
                 </div>
             </div>
+            <html>
+           
             <script>
     function confirmAccept(propertyId) {
         document.getElementById('acceptPropertyId').value = propertyId;

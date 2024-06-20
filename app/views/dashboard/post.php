@@ -22,8 +22,8 @@
             $images = explode(',', $image_filenames);
             ?>
             <div class="col-sm-12 col-xl-4">
-                <div class="bg-light rounded h-100 p-4">
-                    <a href="detail.html" class="img">
+                <div class="card shadow p-3 rounded h-100 p-4">
+                    <a href="<?= BASEURL ?>/home/detail/<?=$list['slug']?>" class="img">
                         <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style="height: 280px; object-fit: cover; width:auto"/>
                     </a>
                     <span class="city d-block mb-3 mt-3 fw-bold"><?= htmlspecialchars($list['propertyname']) ?><span class="badge <?= $bg_color = ($list['type'] == 1 || $list['type'] == 3) ? 'bg-primary' : 'bg-danger'; ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
@@ -79,6 +79,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            
                         <p class="text-center"><strong> Apakah Anda yakin ingin menghapus Property ini?</strong> </p>
                         <h4 class="text-center"><strong> <?= htmlspecialchars($list['propertyname']) ?></strong> </h4>
                         <p class="text-center mb-3"><strong>Aksi ini akan menghapus</strong> </p>

@@ -377,8 +377,9 @@ foreach ($data['lists'] as $properti) {
                   <a href="<?=BASEURL?>home/detail/<?=$list['slug'] ?>" class="img">
                   <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 400px; object-fit: cover;" />
                   </a>
+                  
                   </div>
-                  <div class="property-content">
+                  <div class="property-content shadow">
                     <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
                     <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
                     <div>
@@ -386,6 +387,11 @@ foreach ($data['lists'] as $properti) {
                         ><?=htmlspecialchars($list['location'])?></span
                       >
                      </span>
+                     <span class="icon-star text-warning"></span>
+                     <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
                      <span class="city d-block mb-3"><span class="icon-map-marker fs-5 me-2"></span><?=$list['region_name']?></span>
                       <div class="specs d-flex mb-4">
                         <span class="d-block d-flex align-items-center me-3">

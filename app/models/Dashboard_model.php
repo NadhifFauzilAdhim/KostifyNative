@@ -261,15 +261,88 @@ class Dashboard_model{
         }
     }
 
-    public function acceptRequest($propertyid){
-        $this->db->query("UPDATE propertyreq SET status = 1, confirm_at = NOW() WHERE id = :id");
+    public function requestHandler($propertyid, $action) {
+        if ($action == 1) {
+            $this->db->query("UPDATE propertyreq SET status = 1, confirm_at = NOW() WHERE id = :id");
+        } elseif($action == 0) {
+            $this->db->query("UPDATE propertyreq SET status = -1, confirm_at = NOW() WHERE id = :id");
+        }elseif($action == 3){
+            $this->db->query('DELETE FROM propertyreq WHERE id=:id');
+        }
+        
         $this->db->bind(':id', $propertyid);
-        if($this->db->execute()){
-            
-        } 
+        if ($this->db->execute()) { 
+            return 1;
+        } else {
+           return 0;
+        }
     }
 
-    
-    
+    public function getAccountByUserId($id){
+        $this->db->query("SELECT * FROM account WHERE user_id =:id");
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
 
+    public function editAccount($data, $id) {
+        switch ($data['cardselected']) {
+            case 1:
+                $this->db->query("UPDATE account SET bricardnumber =:cardnumber, briname=:name WHERE user_id=:id");
+                break;
+            case 2:
+                $this->db->query("UPDATE account SET mandiricardnumber =:cardnumber, mandiriname=:name WHERE user_id=:id");
+                break;
+            case 3:
+                $this->db->query("UPDATE account SET bcacardnumber =:cardnumber, bcaname=:name WHERE user_id=:id");
+                break;
+            default:
+                break;
+        }
+        $this->db->bind(':cardnumber', $data['cardnumber']);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':id', $id);
+        return $this->db->execute();
+    }
+
+    public function getSumPaymentByUserID($id){
+        $this->db->query("SELECT SUM(amount) as revenue FROM transactions JOIN property ON property.id = transactions.property_id WHERE transactions.status = 1 AND property.user_id = :id");
+        $this->db->bind(':id',$id);
+        return $this->db->single();
+    }
+    public function getMonthlyRevenueByUserID($id){
+        $this->db->query("SELECT SUM(amount) AS total_sales FROM transactions JOIN property ON property.id = transactions.property_id WHERE transactions.status = 1 AND YEAR(transactions.created_at) = YEAR(CURRENT_DATE()) AND MONTH(transactions.created_at) = MONTH(CURRENT_DATE()) AND property.user_id = :id");
+        $this->db->bind(':id',$id);
+        return $this->db->single();
+    }
+    public function getPaymentInfo($url){
+        $this->db->query("SELECT transactions.*, payment.bankname, payment.transactionnumber, payment.sendername, payment.image, payment.date, payment.created_at,property.propertyname, user.name FROM transactions JOIN payment ON payment.transaction_id = transactions.id JOIN property ON property.id = transactions.property_id JOIN user ON user.id = transactions.user_id WHERE transactions.transactionurl =:url");
+        $this->db->bind(':url', $url);
+        return $this->db->single();
+    }
+
+    public function confirmPayment($data){
+        $this->db->query("UPDATE transactions SET status = 1 WHERE id = :id");
+        $this->db->bind(':id', $data['transaction_id']);
+        return $this->db->execute();
+    }
+    public function checkResident($id){
+        $this->db->query("SELECT user_id FROM transactions WHERE id = :id");
+        $this->db->bind(':id', $id);
+        $result = $this->db->single();
+        if(!empty($result)){
+            $this->db->query("SELECT resident.* FROM resident WHERE user_id = :id");
+            $this->db->bind(':id', $result['user_id']);
+            $this->db->execute();
+            $result = $this->db->rowCount();
+            return $result;
+        }else{
+            return 0;
+        };
+    }
+    public function addResident($data){
+        $this->db->query("INSERT INTO resident (user_id, property_id) VALUES (:user_id, :property_id)");
+        $this->db->bind(':user_id', $data['user_id']);
+        $this->db->bind(':property_id', $data['property_id']);
+        return $this->db->execute();
+    }
 }

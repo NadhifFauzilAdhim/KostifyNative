@@ -42,7 +42,7 @@ foreach ($data['lists'] as $properti) {
             data-aos-delay="300"
           
           >
-            <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg shadow-lg p-3">
               <span class="input-group-text bi-search" id="basic-addon1">
               </span>
 
@@ -64,58 +64,7 @@ foreach ($data['lists'] as $properti) {
         </div>
       
       </div>
-      <div class="row section-counter mt-5 pb-5 text-center">
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-light"><?=$countKost?></span></span
-              >
-              <span class="caption text-light">KOST LIST</span>
-            </div>
-          </div>
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-light"><?=$countKontrakan?></span></span
-              >
-              <span class="caption text-light">KONTRAKAN LIST</span>
-            </div>
-          </div>
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="500"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-light"><?=$countPaviliun?></span></span
-              >
-              <span class="caption text-light">PAVILIUN LIST</span>
-            </div>
-          </div>
-          <div
-            class="col-6 col-sm-6 col-md-6 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="600"
-          >
-            <div class="counter-wrap mb-5 mb-lg-0">
-              <span class="number"
-                ><span class="countup text-primary"><?=count($data['lists'])?></span></span
-              >
-              <span class="caption text-primary">TOTAL</span>
-            </div>
-          </div>
-        </div>
-   
-    </div>
+      
   </section>
 
     <section class="explore-section section-padding" id="section_2">
@@ -167,6 +116,34 @@ foreach ($data['lists'] as $properti) {
                 Paviliun
               </button>
             </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="marketing-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#apartement-tab"
+                type="button"
+                role="tab"
+                aria-controls="apartement-tab"
+                aria-selected="false"
+              >
+                Apartement
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="marketing-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#rumah-tab"
+                type="button"
+                role="tab"
+                aria-controls="rumah-tab"
+                aria-selected="false"
+              >
+                Rumah
+              </button>
+            </li>
             
           </ul>
         </div>
@@ -189,41 +166,54 @@ foreach ($data['lists'] as $properti) {
                     });
 
                     if (empty($kostItems)): ?>
-                    <h5>No data found</h5>
+                     <h1 class="text-center mt-5 mb-5">Huhu Ngga Ketemu &#128531;</h1>
                     <?php else: ?>
                     <?php foreach ($kostItems as $list): ?>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
-                        <div class="property-item mb-30" data-aos="fade" data-aos-delay="300">
-                            <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
-                            <img src="<?= BASEURL ?>images/kamar1.png" alt="Image" class="img-fluid" />
-                            </a>
-                            <div class="property-content">
-                            <span class="city d-block mb-3">
-                                <?= htmlspecialchars($list['propertyname']) ?>
-                                <span class="badge <?= $bg_color = ($list['type'] == 'putra') ? 'bg-warning' : 'bg-danger'; ?> rounded-pill ms-2">
-                                <?= htmlspecialchars($list['type']) ?>
-                                </span>
-                            </span>
-                            <div class="price mb-2">
-                                <span><?= number_format($list['price'], 0, ',', '.') ?></u></strong>/Bulan</span>
-                            </div>
-                            <div>
-                                <span class="d-block mb-2 text-black"><?= htmlspecialchars($list['location']) ?></span>
-                                <span class="city d-block mb-3"><?= htmlspecialchars($list['region_name']) ?></span>
-                                <div class="specs d-flex mb-4">
-                                <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption"><?= htmlspecialchars($list['available']) ?> Kamar Tersedia</span>
-                                </span>
-                                <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
-                                </span>
-                                </div>
-                                <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
-                            </div>
-                            </div>
-                        </div>
+                        <div class="property-item">
+                  <?php 
+                  $image_filenames = $list['image']; 
+                  $images = explode(',', $image_filenames);
+                  ?>
+                  <div class="justify-content-center">
+                  <a href="<?=BASEURL?>home/detail/<?=$list['slug'] ?>" class="img">
+                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 400px; object-fit: cover;" />
+                  </a>
+                  
+                  </div>
+                  <div class="property-content shadow">
+                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
+                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black"
+                        ><?=htmlspecialchars($list['location'])?></span
+                      >
+                     </span>
+                     <span class="icon-star text-warning"></span>
+                     <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                     <span class="city d-block mb-3"><span class="icon-map-marker fs-5 me-2"></span><?=$list['region_name']?></span>
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption"><?=htmlspecialchars($list['available'])?> Kamar Tersedia</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="home/detail/<?=$list['slug'] ?>"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
                         </div>
                     <?php endforeach; ?>
                     <?php endif; ?>
@@ -250,37 +240,50 @@ foreach ($data['lists'] as $properti) {
                     <?php else: ?>
                     <?php foreach ($kostItems as $list): ?>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
-                        <div class="property-item mb-30">
-                            <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
-                            <img src="<?= BASEURL ?>images/kamar1.png" alt="Image" class="img-fluid" />
-                            </a>
-                            <div class="property-content">
-                            <span class="city d-block mb-3">
-                                <?= htmlspecialchars($list['propertyname']) ?>
-                                <span class="badge <?= $bg_color = ($list['type'] == 'putra') ? 'bg-warning' : 'bg-danger'; ?> rounded-pill ms-2">
-                                <?= htmlspecialchars($list['type']) ?>
-                                </span>
-                            </span>
-                            <div class="price mb-2">
-                                <span><?= number_format($list['price'], 0, ',', '.') ?></u></strong>/Bulan</span>
-                            </div>
-                            <div>
-                                <span class="d-block mb-2 text-black"><?= htmlspecialchars($list['location']) ?></span>
-                                <span class="city d-block mb-3"><?= htmlspecialchars($list['region_name']) ?></span>
-                                <div class="specs d-flex mb-4">
-                                <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption"><?= htmlspecialchars($list['available']) ?> Kamar Tersedia</span>
-                                </span>
-                                <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
-                                </span>
-                                </div>
-                                <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
-                            </div>
-                            </div>
-                        </div>
+                        <div class="property-item">
+                  <?php 
+                  $image_filenames = $list['image']; 
+                  $images = explode(',', $image_filenames);
+                  ?>
+                  <div class="justify-content-center">
+                  <a href="<?=BASEURL?>home/detail/<?=$list['slug'] ?>" class="img">
+                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 400px; object-fit: cover;" />
+                  </a>
+                  
+                  </div>
+                  <div class="property-content shadow">
+                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
+                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black"
+                        ><?=htmlspecialchars($list['location'])?></span
+                      >
+                     </span>
+                     <span class="icon-star text-warning"></span>
+                     <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                     <span class="city d-block mb-3"><span class="icon-map-marker fs-5 me-2"></span><?=$list['region_name']?></span>
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption"><?=htmlspecialchars($list['available'])?> Kamar Tersedia</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="home/detail/<?=$list['slug'] ?>"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
                         </div>
                     <?php endforeach; ?>
                     <?php endif; ?>
@@ -309,37 +312,191 @@ foreach ($data['lists'] as $properti) {
                     <?php else: ?>
                     <?php foreach ($kostItems as $list): ?>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
-                        <div class="property-item mb-30">
-                            <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="img">
-                            <img src="<?= BASEURL ?>images/kamar1.png" alt="Image" class="img-fluid" />
-                            </a>
-                            <div class="property-content">
-                            <span class="city d-block mb-3">
-                                <?= htmlspecialchars($list['propertyname']) ?>
-                                <span class="badge <?= $bg_color = ($list['type'] == 'putra') ? 'bg-warning' : 'bg-danger'; ?> rounded-pill ms-2">
-                                <?= htmlspecialchars($list['type']) ?>
-                                </span>
-                            </span>
-                            <div class="price mb-2">
-                                <span><?= number_format($list['price'], 0, ',', '.') ?></u></strong>/Bulan</span>
-                            </div>
-                            <div>
-                                <span class="d-block mb-2 text-black"><?= htmlspecialchars($list['location']) ?></span>
-                                <span class="city d-block mb-3"><?= htmlspecialchars($list['region_name']) ?></span>
-                                <div class="specs d-flex mb-4">
-                                <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"></span>
-                                    <span class="caption"><?= htmlspecialchars($list['available']) ?> Kamar Tersedia</span>
-                                </span>
-                                <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"></span>
-                                    <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
-                                </span>
-                                </div>
-                                <a href="<?= BASEURL ?>home/detail/<?= htmlspecialchars($list['slug']) ?>" class="btn btn-primary py-2 px-3">See details</a>
-                            </div>
-                            </div>
+                        <div class="property-item">
+                  <?php 
+                  $image_filenames = $list['image']; 
+                  $images = explode(',', $image_filenames);
+                  ?>
+                  <div class="justify-content-center">
+                  <a href="<?=BASEURL?>home/detail/<?=$list['slug'] ?>" class="img">
+                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 400px; object-fit: cover;" />
+                  </a>
+                  
+                  </div>
+                  <div class="property-content shadow">
+                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
+                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black"
+                        ><?=htmlspecialchars($list['location'])?></span
+                      >
+                     </span>
+                     <span class="icon-star text-warning"></span>
+                     <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                     <span class="city d-block mb-3"><span class="icon-map-marker fs-5 me-2"></span><?=$list['region_name']?></span>
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption"><?=htmlspecialchars($list['available'])?> Kamar Tersedia</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="home/detail/<?=$list['slug'] ?>"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
                         </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                    
+                </div>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="apartement-tab"
+                role="tabpanel"
+                aria-labelledby="finance-tab"
+                tabindex="0"
+              >
+                <div class="row">
+                <?php
+                    $kostItems = array_filter($data['lists'], function($list) {
+                        return $list['category_id'] == 4;
+                    });
+
+                    if (empty($kostItems)): ?>
+                   
+                       <h1 class="text-center mt-5 mb-5">Huhu Ngga Ketemu &#128531;</h1>
+                
+                    <?php else: ?>
+                    <?php foreach ($kostItems as $list): ?>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
+                        <div class="property-item">
+                  <?php 
+                  $image_filenames = $list['image']; 
+                  $images = explode(',', $image_filenames);
+                  ?>
+                  <div class="justify-content-center">
+                  <a href="<?=BASEURL?>home/detail/<?=$list['slug'] ?>" class="img">
+                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 400px; object-fit: cover;" />
+                  </a>
+                  
+                  </div>
+                  <div class="property-content shadow">
+                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
+                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black"
+                        ><?=htmlspecialchars($list['location'])?></span
+                      >
+                     </span>
+                     <span class="icon-star text-warning"></span>
+                     <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                     <span class="city d-block mb-3"><span class="icon-map-marker fs-5 me-2"></span><?=$list['region_name']?></span>
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption"><?=htmlspecialchars($list['available'])?> Kamar Tersedia</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="home/detail/<?=$list['slug'] ?>"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                    
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="rumah-tab"
+                role="tabpanel"
+                aria-labelledby="finance-tab"
+                tabindex="0"
+              >
+                <div class="row">
+                <?php
+                    $kostItems = array_filter($data['lists'], function($list) {
+                        return $list['category_id'] == 5;
+                    });
+
+                    if (empty($kostItems)): ?>
+                   
+                       <h1 class="text-center mt-5 mb-5">Huhu Ngga Ketemu &#128531;</h1>
+                
+                    <?php else: ?>
+                    <?php foreach ($kostItems as $list): ?>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 mt-4">
+                        <div class="property-item">
+                  <?php 
+                  $image_filenames = $list['image']; 
+                  $images = explode(',', $image_filenames);
+                  ?>
+                  <div class="justify-content-center">
+                  <a href="<?=BASEURL?>home/detail/<?=$list['slug'] ?>" class="img">
+                  <img src="<?= !empty($images[0]) ? BASEURL . 'uploads/' . $images[0] : BASEURL . 'images/kamar1.png' ?>" alt="Image" class="img-fluid property-image" style=" height: 400px; object-fit: cover;" />
+                  </a>
+                  
+                  </div>
+                  <div class="property-content shadow">
+                    <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
+                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black"
+                        ><?=htmlspecialchars($list['location'])?></span
+                      >
+                     </span>
+                     <span class="icon-star text-warning"></span>
+                     <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                  <span class="icon-star text-warning"></span>
+                     <span class="city d-block mb-3"><span class="icon-map-marker fs-5 me-2"></span><?=$list['region_name']?></span>
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption"><?=htmlspecialchars($list['available'])?> Kamar Tersedia</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">Kamar Mandi <?= htmlspecialchars($list['km']) ?></span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="home/detail/<?=$list['slug'] ?>"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
                         </div>
                     <?php endforeach; ?>
                     <?php endif; ?>
@@ -348,15 +505,10 @@ foreach ($data['lists'] as $properti) {
               </div>
             </div>
           </div>
-        
-         
         </div>
       </div>
     
     </section>
-
-   
-   
     <div class="site-footer">
       <div class="container ">
         <div class="row ">

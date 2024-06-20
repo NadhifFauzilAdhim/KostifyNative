@@ -135,7 +135,12 @@ class User_model {
         $this->db->query('UPDATE user SET reset_token = NULL WHERE reset_token = :token');
         $this->db->bind(':token', $token);
         $this->db->execute();
+        
     }
+
+    
+
+   
 }
 ?>
 

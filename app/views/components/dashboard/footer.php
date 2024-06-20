@@ -21,8 +21,12 @@
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="<?=BASEURL?>js/bootstrap.bundle.min.js"></script>
+    <script src="<?=BASEURL?>js/waypoints/waypoints.min.js"></script>
+    <script src="<?=BASEURL?>js/moment.min.js"></script>
+    <script src="<?=BASEURL?>js/tempusdominus-bootstrap-4.min.js"></script>
+   
     <script src="<?=BASEURL?>js/main.js"></script>
-    
+     
 </body>
 
 </html>
