@@ -16,41 +16,29 @@ class Register extends Controller {
             $verificationLink = BASEURL . "register/verify?token=" . $token['verification_token'];
             $message = "Silakan klik link berikut untuk mengaktifkan akun Anda: " . $verificationLink;
 
-            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-            try {
-              
-                $mail->isSMTP();
-                $mail->Host = MAIL_HOST; 
-                $mail->SMTPAuth = true;
-                $mail->Username = MAIL_USERNAME; 
-                $mail->Password = MAIL_PASSWORD; 
-                $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = MAIL_PORT; 
-               
-                $mail->setFrom(MAIL_USERNAME, 'Kostify');
-                $mail->addAddress($_POST['email']); 
-                var_dump($_POST['email']);
-                $mail->isHTML(true); 
-                $mail->Subject = 'Verifikasi Email Anda';
-                $mail->Body    = $message;
+            $mailer = new Mailer();
+            $result = $mailer->sendMail($email, 'Verifikasi Email Anda', $message);
     
-                $mail->send();
+            if ($result === true) {
                 Flasher::setFlash('Registration Berhasil!, Cek Email untuk verifikasi.', '', 'success');
-            } catch (Exception $e) {
-                Flasher::setFlash('Pesan tidak dapat dikirim. Mailer Error: ' . $mail->ErrorInfo, '', 'danger');
+            } else {
+                Flasher::setFlash('Pesan tidak dapat dikirim. Mailer Error: ' . $result, '', 'danger');
             }
         } elseif ($result == -1) {
             Flasher::setFlash('Input Tidak Valid.', 'Cek detail', 'danger');
         } elseif ($result == -2) {
             Flasher::setFlash('Email Sudah Terdaftar.', 'Mohon gunakan Email lain.', 'warning');
-        } elseif($result == -3){
+        } elseif ($result == -3) {
             Flasher::setFlash('Username sudah Terdaftar.', 'Mohon gunakan Username Lain.', 'warning');
+        } elseif ($result == -4) {
+            Flasher::setFlash('Username Tidak Boleh Mengandung Spasi', 'Mohon gunakan Username Lain.', 'warning');
         } else {
             Flasher::setFlash('Pendaftaran gagal.', 'coba lagi nanti.', 'danger');
         }
         header('Location: ' . BASEURL . 'register');
         exit;
     }
+
     public function verify(){
         $token = $_GET['token'];
         $user = $this->model('User_model')->verifyUser($token);

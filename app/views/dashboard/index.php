@@ -3,6 +3,9 @@
             Akun anda belum terverifikasi, silahkan verifikasi terlebih dahulu
             </div>
             <?php endif?>
+            <!-- <div class="alert alert-primary text-center" role="alert">
+            Ini adalah Snapshot dari sistem kami. Mungkin terdapat beberapa masalah harap laporkan.
+            </div> -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-6 col-xl-3">
@@ -19,8 +22,8 @@
                         <div class="card shadow p-3 rounded text-center  p-4">
                             <i class="fa fa-user fa-3x text-primary ms-3"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Penghuni</p>
-                                <h6 class="mb-0">5</h6>
+                                <p class="mb-2">Penyewa</p>
+                                <h6 class="mb-0"><?=$data['residentsCount']['total_Resident']?></h6>
                             </div>
                         </div>
                     </div>

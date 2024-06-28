@@ -18,6 +18,9 @@ class User_model {
         if ($this->usernameExists($data['username'])) {
             return -3; 
         }
+        if (strpos($data['username'], ' ') !== false) {
+            return -4; 
+        }
 
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         $data['phone'] = '+62'.$data['phone'];

@@ -97,9 +97,9 @@ $paysuccess = $data['getSuccessPayment'];
                     <div class="col-lg-8 mb-lg-0 mb-3">
                     <div class="card p-3 ">
                     <p class="h4 mb-0">Summary</p>
-                    <p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: <?=$paymentdata['propertyname']?></span></p>
-                    <p class="mb-0"><span class="fw-bold">Price:</span><span class="c-green">:<strong>Rp. <?= number_format( $paymentdata['amount'], 0, ',', '.') ?></strong></span></p>
-                    <p class="mb-0">Pembayaran Kost di <?=$paymentdata['propertyname']?> </p>
+                    <p class="mb-0"><span class="fw-bold">Property:</span><span class="c-green">: <?=$paymentdata['propertyname']?></span></p>
+                    <p class="mb-0"><span class="fw-bold">Total</span><span class="c-green">: <strong>Rp. <?= number_format( $paymentdata['amount'], 0, ',', '.') ?></strong></span></p>
+                    <p class="mb-0">Keterangan :  <?=$paymentdata['description']?> </p>
                         </div>
                     <div class="card p-3 ">
                     <label for="" class="form__label">Bank</label>
@@ -133,15 +133,15 @@ $paysuccess = $data['getSuccessPayment'];
                                         </span>
                                     </a>
                                 </p>
-                                <div class="collapse show p-3 pt-0" id="collapseExample">
+                                <div class="collapse  p-3 pt-0" id="collapseExample">
                                     <div class="row">
                                         <div class="col-8">
                                       
                                             <p class="h4 mb-0">Summary</p>
-                                            <p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: <?=$paymentdata['propertyname']?></span></p>
-                                            <p class="mb-0"><span class="fw-bold">Price:</span><span
+                                            <p class="mb-0"><span class="fw-bold">Property:</span><span class="c-green">: <?=$paymentdata['propertyname']?></span></p>
+                                            <p class="mb-0"><span class="fw-bold">Total:</span><span
                                                     class="c-green">: <strong>Rp. <?= number_format( $paymentdata['amount'], 0, ',', '.') ?></strong></span></p>
-                                            <p class="mb-0">Pembayaran Kost di <?=$paymentdata['propertyname']?> </p>
+                                            <p class="mb-0">Keterangan :  <?=$paymentdata['description']?> </p>
                                         </div>
                                     </div>
                                 </div>
@@ -160,10 +160,10 @@ $paysuccess = $data['getSuccessPayment'];
                                     <div class="row">
                                         <div class="col-lg-5 mb-lg-0 mb-3">
                                             <p class="h4 mb-0">Summary</p>
-                                            <p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: <?=$paymentdata['propertyname']?></span></p>
-                                            <p class="mb-0"><span class="fw-bold">Price:</span><span
+                                            <p class="mb-0"><span class="fw-bold">Property:</span><span class="c-green">: <?=$paymentdata['propertyname']?></span></p>
+                                            <p class="mb-0"><span class="fw-bold">Total:</span><span
                                                     class="c-green">:<strong>Rp. <?= number_format( $paymentdata['amount'], 0, ',', '.') ?></strong></span></p>
-                                            <p class="mb-0">Pembayaran Kost di <?=$paymentdata['propertyname']?> </p>
+                                                    <p class="mb-0">Keterangan :  <?=$paymentdata['description']?> </p>
                                             <div class="image">
                                                 <img class="img-preview img-fluid mb-3 col-sm-6 property-image mt-2" src="" alt="">
                                             </div>

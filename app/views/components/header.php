@@ -30,3 +30,9 @@
       Kostify | <?=$data['title']?>
     </title>
   </head>
+  <div id="overlayer"></div>
+    <div class="loader">
+    <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    </div>

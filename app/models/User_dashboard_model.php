@@ -140,5 +140,10 @@ class User_dashboard_model{
         $this->db->bind(':id', $id);
         return $this->db->single();
     }
+    public function getProperyResidentByUserID($id){
+        $this->db->query("SELECT property.*, type.type_name,resident.property_id,resident.created_at as RentStart,resident.url FROM resident JOIN property ON property.id=resident.property_id JOIN type ON type.id = property.type WHERE resident.user_id=:id");
+        $this->db->bind(':id', $id);
+        return $this->db->resultSet();
+    }
 
 }

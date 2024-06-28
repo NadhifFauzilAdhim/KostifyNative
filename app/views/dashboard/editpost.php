@@ -46,7 +46,7 @@
                                 <label for="category" class="form-label">Jenis Tempat Tinggal</label>
                                 <div class="input-group mb-3">
                                     
-                                    <select class="form-select" aria-label="Default select example" name="category" id="category">
+                                    <select class="form-select" aria-label="Default select example" name="category" id="category" required>
                                         <option selected>Pilih Jenis Tempat Tinggal</option>
                                         <?php foreach($data['getcategories'] as $category):?>
                                             <option value="<?=$category['id']?>"><?=$category['pro_category']?></option>
@@ -57,7 +57,7 @@
                                 <label for="type" class="form-label">Jenis</label>
                                 <div class="input-group mb-3">
                                     
-                                    <select class="form-select " aria-label="Default select example" name="type" id="type">
+                                    <select class="form-select " aria-label="Default select example" name="type" id="type" required>
                                         <?php foreach($data['gettype'] as $type):?>
                                             <option value="<?=$type['id']?>"><?=$type['type_name']?></option>
                                         <?php endforeach?>
@@ -66,20 +66,20 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="available"  class="form-label">Jumlah Tersedia</label>
-                                    <input type="text" class="form-control" id="available" name="available" value="<?=$data['getpost']['available']?>"> 
+                                    <input type="text" class="form-control" id="available" name="available" value="<?=$data['getpost']['available']?>" required> 
                                 </div>
                                 <div class="mb-3">
                                     <label for="km"  class="form-label">Kamar Mandi</label>
-                                    <input type="text" class="form-control" id="km" name="km" value="<?=$data['getpost']['km']?>">
+                                    <input type="text" class="form-control" id="km" name="km" value="<?=$data['getpost']['km']?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="price"  class="form-label">Harga</label>
-                                    <input type="text" class="form-control" id="price" name="price" value="<?=$data['getpost']['price']?>">
+                                    <input type="text" class="form-control" id="price" name="price" value="<?=$data['getpost']['price']?>"required> 
                                 </div>
                                 <label for="payment_type" class="form-label">Tipe Pembayaran</label>
                                 <div class="input-group mb-3">
                                     
-                                    <select class="form-select " aria-label="Default select example" name="payment_type" id="payment_type">
+                                    <select class="form-select " aria-label="Default select example" name="payment_type" id="payment_type" required>
                                       <option value="0">Tunai</option>
                                       <option value="1">/Bulan</option>
                                       <option value="2">/2 Bulan</option>
@@ -99,7 +99,7 @@
                                 <label for="region" class="form-label">Lokasi</label>
                                 <div class="input-group mb-3">
                                     
-                                    <select class="form-select " aria-label="Default select example" name="region" id="region">
+                                    <select class="form-select " aria-label="Default select example" name="region" id="region" required>
                                     <?php foreach($data['getregion'] as $region){?>
                                         <option value="<?=$region['id']?>"><?=$region['region_name']?></option>
                                       <?php }?>
@@ -107,11 +107,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="location"  class="form-label">Alamat Lengkap</label>
-                                    <input type="text" class="form-control" id="location" name="location" value="<?=$data['getpost']['location']?>">
+                                    <input type="text" class="form-control" id="location" name="location" value="<?=$data['getpost']['location']?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="facility" class="form-label">Tulis tentang tempat tinggal</label>
-                                    <input id="facility" type="hidden" name="facility" value="<?=$data['getpost']['facility']?>">
+                                    <input id="facility" type="hidden" name="facility" value="<?=$data['getpost']['facility']?>" required>
                                     <trix-editor input="facility"></trix-editor>
                                 </div>
                                 <div class="mb-3">

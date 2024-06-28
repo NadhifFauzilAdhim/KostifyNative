@@ -26,9 +26,15 @@ class Dashboard_model{
 
     }
     public function getPaymentStatusByUserID($id){
-        $this->db->query("SELECT transactions.*, property.propertyname, property.user_id as owner_id, user.name FROM transactions JOIN property ON property.id = transactions.property_id JOIN user ON user.id = transactions.user_id WHERE property.user_id = :id AND transactions.created_at >= DATE_SUB(CURDATE(), INTERVAL 15 DAY)");
+        $this->db->query("SELECT transactions.*, property.propertyname, property.user_id as owner_id, user.name FROM transactions JOIN property ON property.id = transactions.property_id JOIN user ON user.id = transactions.user_id WHERE property.user_id = :id AND transactions.created_at >= DATE_SUB(CURDATE(), INTERVAL 15 DAY) ORDER BY transactions.id DESC");
         $this->db->bind(':id', $id);
         return $this->db->resultSet();
+    }
+
+    public function getResidentCount($id){
+        $this->db->query("SELECT COUNT(property_id) as total_Resident FROM resident JOIN property ON property.id = resident.property_id JOIN user ON user.id = property.user_id WHERE property.user_id =:id");
+        $this->db->bind(':id', $id);
+        return $this->db->single();
     }
 
     public function setVisibility($data){
@@ -340,9 +346,85 @@ class Dashboard_model{
         };
     }
     public function addResident($data){
-        $this->db->query("INSERT INTO resident (user_id, property_id) VALUES (:user_id, :property_id)");
+        $randomUrl = bin2hex(random_bytes(15));
+        $this->db->query("INSERT INTO resident (user_id, property_id,url) VALUES (:user_id, :property_id,:url)");
         $this->db->bind(':user_id', $data['user_id']);
-        $this->db->bind(':property_id', $data['property_id']);
+        $this->db->bind(':property_id', $data['property_id']);  
+        $this->db->bind(':url', $randomUrl);
         return $this->db->execute();
     }
+
+    public function getProperyResidentByOwnerID($id){
+        $this->db->query("SELECT property.*, type.type_name,resident.property_id FROM property JOIN type ON type.id = property.type JOIN resident ON resident.property_id = property.id WHERE property.user_id = :id");
+        $this->db->bind(':id', $id);
+        return $this->db->resultSet();
+    }
+
+
+
+    public function getPaymentStatusByUserIDAndSlug($id,$slug){
+        $this->db->query("SELECT transactions.*, property.propertyname, property.user_id as owner_id, user.name FROM transactions JOIN property ON property.id = transactions.property_id JOIN user ON user.id = transactions.user_id WHERE property.user_id = :id AND property.slug=:slug AND transactions.created_at >= DATE_SUB(CURDATE(), INTERVAL 15 DAY) ORDER BY transactions.id DESC");
+        $this->db->bind(':id', $id);
+        $this->db->bind(':slug', $slug);
+        return $this->db->resultSet();
+    }
+
+    public function getResidentInfoBySlug($slug){
+        $this->db->query("SELECT resident.*, user.name,user.username FROM resident JOIN user ON user.id = resident.user_id JOIN property ON property.id = resident.property_id WHERE property.slug =:slug");
+        $this->db->bind(':slug', $slug);
+        return $this->db->resultSet();
+    }
+
+    public function getResidentDetailByUrl($slug){
+        $this->db->query("SELECT resident.*, user.username, user.name,property.price,property.payment_type,property.propertyname FROM resident JOIN user ON user.id = resident.user_id JOIN property ON property.id = resident.property_id WHERE resident.url =:url");
+        $this->db->bind(':url', $slug);
+        return $this->db->single();
+    }
+    public function addTransaction($data){
+        $randomUrl = bin2hex(random_bytes(15));
+        $this->db->query("INSERT INTO transactions (amount, user_id, property_id,description,transactionurl) VALUES (:amount, :user_id, :property_id, :description, :url)");
+        $this->db->bind(':amount', $data['amount']);
+        $this->db->bind(':user_id', $data['user_id']);
+        $this->db->bind(':property_id', $data['property_id']);
+        $this->db->bind(':description', $data['description']);
+        $this->db->bind(':url', $randomUrl);
+        return $this->db->execute();
+    }
+
+    public function checkPaymentValidation($id,$url){
+        $this->db->query("SELECT transactions.transactionurl FROM transactions JOIN property ON property.id=transactions.property_id JOIN user ON user.id=property.user_id WHERE transactions.transactionurl =:url AND property.user_id =:id");
+        $this->db->bind(':id', $id);
+        $this->db->bind(':url', $url);
+         $this->db->execute();
+        return $this->db->rowCount();
+    }
+    public function checkOwner($slug,$id){
+        $this->db->query("SELECT property.user_id FROM property WHERE property.slug =:slug AND property.user_id =:id");
+        $this->db->bind(':slug', $slug);
+        $this->db->bind(':id', $id);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+    public function checkResidentOwner($url,$id){
+        $this->db->query("SELECT resident.id FROM resident JOIN property ON property.id=resident.property_id WHERE property.user_id=:id AND resident.url=:url");
+        $this->db->bind(':url', $url);
+        $this->db->bind(':id', $id);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteTransaction($data){
+        $this->db->query("DELETE FROM transactions WHERE id = :id");
+        $this->db->bind(':id', $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteResident($data){
+        $this->db->query("DELETE FROM resident WHERE id = :id");
+        $this->db->bind(':id', $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
 }

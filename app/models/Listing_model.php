@@ -16,7 +16,7 @@ class Listing_model {
             JOIN region ON region.id = property.region_id 
             JOIN type ON type.id = property.type
             WHERE (property.propertyname LIKE :keyword 
-            OR region.region_name LIKE :keyword OR type.type_name LIKE :keyword) AND property.visibility = true
+            OR region.region_name LIKE :keyword OR type.type_name LIKE :keyword OR property.location LIKE :keyword OR property.price LIKE :keyword ) AND property.visibility = true
             ORDER BY property.id DESC";
 
             $this->db->query($query);

@@ -1,15 +1,9 @@
 <?php 
-define('BASEURL','http://localhost:8080/kostifynative/');
+define('BASEURL','http://localhost/kostifynative/');
 define('DB_HOST','localhost');
 define('DB_USER','root');
 define('DB_PASS','');
 define('DB_NAME','kostifymaindatabase');
-
-// define('BASEURL','http://localhost:8080/kostifynative/public/');
-// define('DB_HOST','cby.h.filess.io');
-// define('DB_USER','kostifymaindatabase_tonenearer');
-// define('DB_PASS','f4f0ae9845de7b45aff89bbef05d263adbf7f387');
-// define('DB_NAME','kostifymaindatabase_tonenearer');
 
 //elasticMAil SMTP
 define('MAIL_MAILER', 'smtp');

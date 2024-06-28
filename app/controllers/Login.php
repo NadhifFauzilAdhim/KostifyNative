@@ -29,33 +29,20 @@ class Login extends Controller {
     public function requestResetPassword(){
         $email = $_POST['email'];
         $user = $this->model('User_model')->findUserByEmail($email);
-
+    
         if ($user) {
             $token = bin2hex(random_bytes(50)); 
             $this->model('User_model')->storeResetToken($email, $token); 
-
+    
             $resetLink = BASEURL . "login/resetPassword?token=" . $token;
             $message = "Silakan klik link berikut untuk reset password Anda: " . $resetLink;
-        
-            $mail = new PHPMailer\PHPMailer\PHPMailer();
-            $mail->isSMTP();
-            $mail->Host = MAIL_HOST; 
-            $mail->SMTPAuth = true;
-            $mail->Username = MAIL_USERNAME; 
-            $mail->Password = MAIL_PASSWORD; 
-            $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = MAIL_PORT; 
-
-            $mail->setFrom(MAIL_USERNAME, 'Kostify');
-            $mail->addAddress($email);
-            $mail->isHTML(true);
-            $mail->Subject = 'Reset Password';
-            $mail->Body    = $message;
-
-            if(!$mail->send()) {
-                Flasher::setFlash('Gagal', 'Email tidak dapat dikirim. Error: ' . $mail->ErrorInfo, 'danger');
-            } else {
+            $mailer = new Mailer();
+            $result = $mailer->sendMail($email, 'Reset Password', $message);
+    
+            if ($result === true) {
                 Flasher::setFlash('Email reset password telah dikirim.', 'Silakan cek email Anda.', 'success');
+            } else {
+                Flasher::setFlash('Gagal', 'Email tidak dapat dikirim. Error: ' . $result, 'danger');
             }
         } else {
             Flasher::setFlash('Gagal', 'Email tidak terdaftar.', 'danger');

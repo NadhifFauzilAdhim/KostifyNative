@@ -12,6 +12,7 @@ class Dashboard extends Controller {
            $data['getPaymentStat'] = $this->model('Dashboard_model')->getPaymentStatusByUserID($_SESSION['user']['id']);
            $data['revenue'] = $this->model('Dashboard_model')->getSumPaymentByUserID($_SESSION['user']['id']);
            $data['monthlyRevenue'] = $this->model('Dashboard_model')->getMonthlyRevenueByUserID($_SESSION['user']['id']);
+           $data['residentsCount'] = $this->model('Dashboard_model')->getResidentCount($_SESSION['user']['id']);
            $this->view('components/dashboard/header',$data);
            $this->view('components/dashboard/sidebarnav',$data);
            $this->view('dashboard/index',$data);
@@ -98,7 +99,7 @@ class Dashboard extends Controller {
     if(isset($_POST['slug'])){
         $slug = $_POST['slug'];
         $isAvailable = $this->model('Dashboard_model')->checkSlugAvailability($slug);
-        echo $isAvailable ? '0' : '1'; // Mengembalikan '0' jika tersedia, '1' jika tidak
+        echo $isAvailable ? '0' : '1'; 
         exit;
     }
 }
@@ -495,18 +496,48 @@ public function storeTransaction(){
         exit;
     }
 }
+
+ public function addTransaction(){
+    if(isset($_SESSION['user'])){
+        if(isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']){
+            $result = $this->model('Dashboard_model')->addTransaction($_POST);
+            if($result){
+                Flasher::setFlash('Berhasil Mengirimkan Tagihan Kepada Penyewa', '', 'success');
+                header('location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
+            }
+            else{
+                Flasher::setFlash('Gagal Mengirimkan Tagihan Kepada Penyewa', '', 'danger');
+                header('location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
+            }
+
+        }else{
+            echo '403 Access forbidden';
+        }
+    }else{
+        header('Location: ' . BASEURL . 'login');
+        exit;
+    }
+ }
+
 public function paymentdetail($url){
     if(isset($_SESSION['user'])){
         if($_SESSION['user']['is_verified'] && $_SESSION['user']['is_owner']){
-            $data['title'] = 'Payment Detail';
-            $data['userauth'] = $_SESSION['user'];
-            $data['cardinfo'] = $this->model('Dashboard_model')->getAccountByUserId($_SESSION['user']['id']);
-            $data['getPaymentInfo'] = $this->model('Dashboard_model')->getPaymentInfo($url);
-            $data['checkResident'] = $this->model('Dashboard_model')->checkResident($data['getPaymentInfo']['id']);
-            $this->view('components/dashboard/header', $data);
-            $this->view('components/dashboard/sidebarnav', $data);
-            $this->view('dashboard/paymentdetail', $data);
-            $this->view('components/dashboard/footer');
+            if($this->model('Dashboard_model')->checkPaymentValidation($_SESSION['user']['id'], $url) > 0){
+                $data['title'] = 'Payment Detail';
+                $data['userauth'] = $_SESSION['user'];
+                $data['cardinfo'] = $this->model('Dashboard_model')->getAccountByUserId($_SESSION['user']['id']);
+                $data['getPaymentInfo'] = $this->model('Dashboard_model')->getPaymentInfo($url);
+                $data['checkResident'] = $this->model('Dashboard_model')->checkResident($data['getPaymentInfo']['id']);
+                $this->view('components/dashboard/header', $data);
+                $this->view('components/dashboard/sidebarnav', $data);
+                $this->view('dashboard/paymentdetail', $data);
+                $this->view('components/dashboard/footer');
+            }else{
+                $this->view('error/error404');
+            }
+           
         }else{
             echo '403 Access forbidden';
         }
@@ -572,9 +603,10 @@ public function resident(){
         if($_SESSION['user']['is_verified'] && $_SESSION['user']['is_owner']){
             $data['title'] = 'Penyewa';
             $data['userauth'] = $_SESSION['user'];
+            $data['getpropery'] = $this->model('Dashboard_model')->getProperyResidentByOwnerID($data['userauth']['id']);
             $this->view('components/dashboard/header', $data);
             $this->view('components/dashboard/sidebarnav', $data);
-            // $this->view('dashboard/paymentdetail', $data);
+            $this->view('dashboard/resident', $data);
             $this->view('components/dashboard/footer');
         }else{
             echo '403 Access forbidden';
@@ -584,4 +616,141 @@ public function resident(){
         exit;
     }
 }
+
+public function residentmanagement($slug){
+    if(isset($_SESSION['user'])){
+        if($_SESSION['user']['is_verified'] && $_SESSION['user']['is_owner']){
+            if($this->model('Dashboard_model')->checkOwner($slug, $_SESSION['user']['id']) > 0){
+            $data['title'] = 'Management';
+            $data['userauth'] = $_SESSION['user'];
+            $data['getPaymentStat'] = $this->model('Dashboard_model')->getPaymentStatusByUserIDAndSlug($_SESSION['user']['id'],$slug);
+            $data['getResident'] = $this->model('Dashboard_model')->getResidentInfoBySlug($slug);
+            $this->view('components/dashboard/header', $data);
+            $this->view('components/dashboard/sidebarnav', $data);
+            $this->view('dashboard/residentmgm', $data);    
+            $this->view('components/dashboard/footer');
+            }else{
+                echo '403 Access forbidden';
+            }
+            
+        }else{
+            echo '403 Access forbidden';
+        }
+    }else{
+        header('Location: ' . BASEURL . 'login');
+        exit;
+    }
+}
+public function residentDetail($slug){
+    if(isset($_SESSION['user'])){
+        if($_SESSION['user']['is_verified'] && $_SESSION['user']['is_owner']){
+           if($this->model('Dashboard_model')->checkResidentOwner($slug, $_SESSION['user']['id']) > 0){
+            $data['userauth'] = $_SESSION['user'];
+            $data['resident_detail'] = $this->model('Dashboard_model')->getResidentDetailByUrl($slug);
+            $data['title'] =  $data['resident_detail']['name'];
+            $data['getPaymentStat'] = $this->model('User_dashboard_model')->getPaymentByUserId( $data['resident_detail']['user_id']);
+            usort($data['getPaymentStat'], function($a, $b) {
+                return strtotime($b['created_at']) - strtotime($a['created_at']);
+            });
+            $data['last_payment'] = $data['getPaymentStat'][0];
+            $paymentType = $data['resident_detail']['payment_type'];
+            $lastPaymentDate = new DateTime( $data['last_payment']['created_at']);
+
+                if ($paymentType == 0) {
+                    $dueDate = "Tidak ada tanggal jatuh tempo (Tunai)";
+                } else {
+                    $lastPaymentDate->modify("+$paymentType month");
+                    $dueDate = $lastPaymentDate->format('Y-m-d');
+                }
+            $data['duedate'] = $dueDate;
+
+            $this->view('components/dashboard/header', $data);
+            $this->view('components/dashboard/sidebarnav', $data);
+            $this->view('dashboard/residentdetail', $data);    
+            $this->view('components/dashboard/footer');
+
+           }else{
+               echo '403 Access forbidden';
+           }
+           
+        }else{
+            echo '403 Access forbidden';
+        }
+    }else{
+        header('Location: ' . BASEURL . 'login');
+        exit;
+    }
+}
+
+public function rent(){
+    if(isset($_SESSION['user'])){
+        if($_SESSION['user']['is_verified'] && !$_SESSION['user']['is_owner']){
+            $data['title'] = 'My Rent';
+            $data['userauth'] = $_SESSION['user'];
+            $data['getpropery'] = $this->model('User_dashboard_model')->getProperyResidentByUserID($data['userauth']['id']);
+            $this->view('components/dashboard/header', $data);
+            $this->view('components/dashboard/sidebarnav', $data);
+            $this->view('userdashboard/rent', $data);
+            $this->view('components/dashboard/footer');
+        }else{
+            echo '403 Access forbidden';
+        }
+    }else{
+        header('Location: ' . BASEURL . 'login');
+        exit;
+    }   
+}
+public function myrent($url){
+    if(isset($_SESSION['user'])){
+        if($_SESSION['user']['is_verified'] && !$_SESSION['user']['is_owner']){
+            $data['title'] = 'My Rent';
+            $data['userauth'] = $_SESSION['user'];
+            $data['getpropery'] = $this->model('User_dashboard_model')->getProperyResidentByUserID($data['userauth']['id']);
+            
+            $this->view('components/dashboard/header', $data);
+            $this->view('components/dashboard/sidebarnav', $data);
+            $this->view('userdashboard/myrent', $data);
+            $this->view('components/dashboard/footer');
+        }else{
+            echo '403 Access forbidden';
+        }
+    }else{
+        header('Location: ' . BASEURL . 'login');
+        exit;
+}
+}   
+public function deleteTransaction(){
+    if(isset($_SESSION['user'])){
+        if(isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']){
+          $result = $this->model('Dashboard_model')->deleteTransaction($_POST['id']);
+          if($result > 0){
+              Flasher::setFlash('Berhasil', 'Menghapus Transaksi', 'success');
+              header('location: ' . $_SERVER['HTTP_REFERER']);
+              exit;
+          }else{
+              Flasher::setFlash('Gagal', 'Menghapus Transaksi', 'danger');
+              header('location: ' . $_SERVER['HTTP_REFERER']);
+              exit;
+          }
+        }   
+    }
+}
+
+public function deleteResident(){
+    if(isset($_SESSION['user'])){
+        if(isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']){
+          $result = $this->model('Dashboard_model')->deleteResident($_POST['id']);
+          if($result > 0){
+              Flasher::setFlash('Berhasil', 'Menghapus Penyewa', 'success');
+              header('location: ' . $_SERVER['HTTP_REFERER']);
+              exit;
+          }else{
+              Flasher::setFlash('Gagal', 'Menghapus Penyewa', 'danger');
+              header('location: ' . $_SERVER['HTTP_REFERER']);
+              exit;
+          }
+        }   
+    }
+}
+
 }

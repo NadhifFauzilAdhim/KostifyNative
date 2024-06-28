@@ -49,7 +49,7 @@
                         <p class="home__description">
                             We can't seem to find the page <br> you are looking for.
                         </p>
-                        <a href="/kostifynative/public/" class="home__button">
+                        <a href="<?=BASEURL?>" class="home__button">
                             Go Home
                         </a>
                     </div>

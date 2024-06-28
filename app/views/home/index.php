@@ -48,7 +48,7 @@ foreach ($data['lists'] as $properti) {
                     class="custom-block-image-featured img-fluid"
                     alt=""
             />
-          Dengan fitur pencarian yang mudah, Anda dapat menemukan kos atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.
+          Dengan fitur pencarian yang mudah, Anda dapat menemukan kost atau tempat tinggal ideal Anda hanya dengan beberapa klik saja. Nikmati kemudahan dan kecepatan dalam mencari tempat tinggal impian Anda tanpa ribet.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -126,6 +126,7 @@ foreach ($data['lists'] as $properti) {
   >
 
     <div class="container hero-section-container" >
+      
       <div class="row pb-5">
         
         <div class="col-lg-8 col-12 mx-auto"
@@ -186,6 +187,7 @@ foreach ($data['lists'] as $properti) {
 
   <section class="featured-section">
         <div class="container">
+          
           <div class="row justify-content-center">
             <div class="col-lg-4 col-12 mb-4" data-aos="fade-up">
               <div class="custom-block bg-white shadow-lg">
@@ -265,6 +267,7 @@ foreach ($data['lists'] as $properti) {
           </div>
           </div>
            <div class="row section-counter mt-5 pb-5 text-center justify-content-center">
+           
           <div
             class="col-6 col-sm-6 col-md-6 col-lg-2"
             data-aos="fade-up"
@@ -381,7 +384,7 @@ foreach ($data['lists'] as $properti) {
                   </div>
                   <div class="property-content shadow">
                     <span class="city d-block mb-3"><?=htmlspecialchars($list['propertyname'])?><span class="badge <?= strpos(strtolower($list['type_name']), 'putra') !== false ? 'bg-primary' : (strpos(strtolower($list['type_name']), 'putri') !== false ? 'bg-danger' : 'bg-warning'); ?> rounded-pill ms-2"><?= $list['type_name'] ?></span></span>
-                    <div class="price mb-2"><span><?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
+                    <div class="price mb-2"><span>Rp. <?= number_format( $list['price'], 0, ',', '.') ?></u></strong>/<?php if($list['payment_type'] == 1){echo "Bulan";}elseif($list['payment_type'] == 0){echo " Tunai";}else{echo $list['payment_type'] . " Bulan";}?></span></div>
                     <div>
                       <span class="d-block mb-2 text-black"
                         ><?=htmlspecialchars($list['location'])?></span
@@ -604,69 +607,7 @@ foreach ($data['lists'] as $properti) {
       </div>
     </div>
 
-<div class="site-footer">
-      <div class="container ">
-        <div class="row ">
-          <div class="col-lg-4">
-            <div class="widget">
-              <h3>Contact</h3>
-              <address>Jl. Ring Road Utara, Ngringin, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281</address>
-              <ul class="list-unstyled links">
-                <li><a href="tel://085727785062">+62 85-7277-85062</a></li>
-               
-                <li>
-                  <a href="mailto:info@mydomain.com">nadhiffauzil@students.amikom.ac.id</a>
-                </li>
-              </ul>
-            </div>
-      
-          </div>
-       
-          <div class="col-lg-4">
-            <div class="widget">
-              <h3>Links</h3>
-              <ul class="list-unstyled links">
-                <li><a href="https://www.arabisgroup.cloud/">Arabis Group</a></li>
-                <li><a href="https://ndfproject.my.id/">NDFProject</a></li>
-              
-              </ul>
 
-             
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="widget">
-              <h3>Dev </h3>
-              <img src="<?= BASEURL?>images/kostifydev.png" alt="" width="300px">
-             
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-5">
-          <div class="col-12 text-center">
-            
-            <p>
-              Copyright &copy;
-              <script>
-                document.write(new Date().getFullYear());
-              </script>
-              . All Rights Reserved. &mdash; Kostify | <a href="https://www.arabisgroup.cloud/">Arabis Group</a> | <a href="https://ndfproject.my.id/">NDFProject</a>
-             
-            </p>
-          
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div id="overlayer"></div>
-    <div class="loader">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
     <script>
       // Menampilkan Modal
       document.getElementById('showModal1Button').addEventListener('click', function() {
@@ -691,11 +632,4 @@ foreach ($data['lists'] as $properti) {
     </script>
    
   
-    <script src="<?= BASEURL?>js/bootstrap.bundle.min.js"></script>
-    <script src="<?= BASEURL?>js/tiny-slider.js"></script>
-    <script src="<?= BASEURL?>js/aos.js"></script>
-    <script src="<?= BASEURL?>js/navbar.js"></script>
-    <script src="<?= BASEURL?>js/counter.js"></script>
-    <script src="<?= BASEURL?>js/custom.js"></script>
-  </body>
-</html>
+    

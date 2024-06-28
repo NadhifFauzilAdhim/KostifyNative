@@ -54,38 +54,6 @@
       </div>
     </div>
               
-
-
-    <div id="overlayer"></div>
-    <div class="loader">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-    <script>
-      // Menampilkan Modal
-      document.getElementById('showModal1Button').addEventListener('click', function() {
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal1'));
-        myModal.show();
-      });
-  
-      document.getElementById('showModal2Button').addEventListener('click', function() {
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
-        myModal.show();
-      });
-
-      document.getElementById('showModal3Button').addEventListener('click', function() {
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal3'));
-        myModal.show();
-      });
-
-       document.getElementById('showModal4Button').addEventListener('click', function() {
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal4'));
-        myModal.show();
-      });
-    </script>
-   
-  
     <script src="<?= BASEURL?>/js/bootstrap.bundle.min.js"></script>
     <script src="<?= BASEURL?>/js/tiny-slider.js"></script>
     <script src="<?= BASEURL?>/js/aos.js"></script>

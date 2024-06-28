@@ -20,7 +20,7 @@
             >
               <li class="active"><a href="<?= BASEURL ?>">Home</a></li>
               <li class="has-children">
-                <a href="properties.html">Property</a>
+                <a >Property</a>
                 <ul class="dropdown">
                   <li><a href="<?=BASEURL?>/home/listing?search=kost">Kost</a></li>
                   <li><a href="<?=BASEURL?>/home/listing?search=paviliun">Paviliun</a></li>

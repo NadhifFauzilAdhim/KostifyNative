@@ -1,22 +1,4 @@
-<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Apakah Anda yakin ingin menghapus post ini?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p class="text-center"><strong>Aksi ini akan menghapus</strong> </p>
-                <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Postingan</strong></p>
-                <p class="text-center"><i class="fa-regular fa-circle-xmark"></i> Menghapus <strong class="text-danger">Komentar</strong></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
-            </div>
-          </div>
-        </div>
-      </div>
+
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-12">
