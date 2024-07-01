@@ -33,6 +33,7 @@
 - Manage Payment
 - Property Request
 - Upload Images
+- Payment Management
 
 <div align="center">
    <img height="300" src="https://i.ibb.co.com/zPG0Cwm/Screenshot-49.png"  />
