@@ -31,6 +31,8 @@
 - Post Property
 - Property Request
 - Upload Images
+- Payment Management
+- Resident Management
 
 
 ## Installation
